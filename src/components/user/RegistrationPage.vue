@@ -5,48 +5,33 @@
         <AlertBox/>
 
         <div class="form-greetings py-3">
-          <h3 class="h3">Registration Form</h3>
+          <h3 class="h3">Register</h3>
         </div>
 
         <div class="form-container">
           <div class="login-form">
             <form>
-
               <div class="mb-3">
-                <input v-model="fullName" :class="inputClasses(this.fullNameValid)" placeholder="Full name" type="text"
-                       @input="fullNameChange"/>
+                <input v-model="email" :class="emailClass" placeholder="Email" type="email"/>
               </div>
 
               <div class="mb-3">
-                <input v-model="address" :class="inputClasses(this.addressValid)" placeholder="Address" type="text"
-                       @input="addressChange"/>
-              </div>
-
-
-              <div class="mb-3">
-                <input v-model="telephone" class="form-control" placeholder="Telephone" type="number"
-                       @input="userInformationChange"/>
+                <input v-model="username" :class="usernameClass" placeholder="Username" type="text"/>
               </div>
 
               <div class="mb-3">
-                <input v-model="email" :class="inputClasses(this.emailValid)" placeholder="Email" type="email"
-                       @input="emailChange"/>
+                <input v-model="password" :class="passwordClass" placeholder="Password"
+                       type="password"/>
               </div>
 
               <div class="mb-3">
-                <input v-model="password" :class="inputClasses(this.passwordValid)" placeholder="Password"
-                       type="password"
-                       @input="passwordChange"/>
-              </div>
-
-              <div class="mb-3">
-                <input v-model="repeatPassword" :class="inputClasses(this.repeatPasswordValid)"
+                <input v-model="passwordRepeat" :class="passwordRepeatClass"
                        placeholder="Repeat Password"
-                       type="password" @input="repeatPasswordChange"/>
+                       type="password"/>
               </div>
 
               <div class="mb-3">
-                <button class="btn btn-info login-button" @click="registerConfirmChange">Register</button>
+                <button class="btn btn-info login-button" @click="registerAction">Register</button>
                 <router-link class="btn btn-info login-button" to="/user/login">Back</router-link>
               </div>
             </form>
@@ -61,7 +46,6 @@
 
 <script>
 import '@/assets/login.css';
-import FormValidation from "@/util/FormValidation";
 import {mapActions, mapGetters} from "vuex";
 import AlertBox from "@/components/util/AlertBox";
 
@@ -70,74 +54,59 @@ export default {
   components: {
     AlertBox
   },
-  data() {
-    return {
-      formValidated: false,
-
-      fullNameValid: false,
-      addressValid: false,
-      emailValid: false,
-      passwordValid: false,
-      repeatPasswordValid: false,
-
-      fullName: '',
-      address: '',
-      telephone: '',
-      email: '',
-      password: '',
-      repeatPassword: ''
-    }
-  },
 
   computed: {
-    ...mapGetters(['userRegistrationErrorMessage']),
-  },
-  methods: {
-    ...mapActions(['registerAction']),
-
-    inputClasses: function (field) {
-      return {
-        'form-control': true,
-        'is-valid': field && this.formValidated,
-        'is-invalid': !field && this.formValidated,
+    ...mapGetters(
+        {
+          usernameClass: 'registration/usernameClass',
+          passwordClass: 'registration/passwordClass',
+          emailClass: 'registration/emailClass',
+          passwordRepeatClass: 'registration/passwordRepeatClass'
+        }
+    ),
+    email: {
+      get() {
+        return this.$store.state.login.email;
+      },
+      set(value) {
+        this.$store.commit('registration/EMAIL', value);
+        this.$store.commit('registration/EMAIL_CLASS');
       }
     },
-
-    fullNameChange() {
-      this.formValidated = true;
-      this.fullNameValid = this.fullName !== '';
+    username: {
+      get() {
+        return this.$store.state.login.username
+      },
+      set(value) {
+        this.$store.commit('registration/USERNAME', value);
+        this.$store.commit('registration/USERNAME_CLASS');
+      }
     },
-    addressChange() {
-      this.formValidated = true;
-      this.addressValid = this.address !== '';
+    password: {
+      get() {
+        return this.$store.state.login.password;
+      },
+      set(value) {
+        this.$store.commit('registration/PASSWORD', value);
+        this.$store.commit('registration/PASSWORD_CLASS');
+      }
     },
-    emailChange() {
-      this.formValidated = true;
-      this.emailValid = FormValidation.validateEmail(this.email);
-    },
-    passwordChange() {
-      this.formValidated = true;
-      this.passwordValid = this.password !== '';
-    },
-    repeatPasswordChange() {
-      this.formValidated = true;
-      this.repeatPasswordValid = this.password === this.repeatPassword;
-    },
-
-    registerConfirmChange() {
-      this.formValidated = true;
-
-      if (this.fullNameValid && this.addressValid && this.emailValid && this.passwordValid && this.repeatPasswordValid) {
-        this.registerAction(
-            {
-              fullName: this.fullName,
-              address: this.address,
-              telephone: this.telephone,
-              email: this.email,
-              password: this.password
-            });
+    passwordRepeat: {
+      get() {
+        return this.$store.state.login.passwordRepeat;
+      },
+      set(value) {
+        this.$store.commit('registration/PASSWORD_REPEAT', value);
+        this.$store.commit('registration/PASSWORD_REPEAT_CLASS');
       }
     }
+  },
+  methods: {
+    ...mapActions(
+        {
+          registerAction: 'registration/registerAction'
+        }
+    )
   },
   mounted() {
     this.$store.dispatch('hideAlert');
