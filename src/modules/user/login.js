@@ -2,44 +2,36 @@ import ApiConfig from "@/config/ApiConfig";
 
 const axios = require('axios');
 import router from '../../routes';
-import FormValidation from "@/util/FormValidation";
 
 export default {
+    namespaced: true,
     state: {
-        email: '',
+        username: '',
         password: '',
-        rememberMe: false,
-
-        validEmail: false,
-        validPassword: false
+        rememberMe: false
     },
     actions: {
 
-        handleEmailChange: ({commit, state}, newEmail) => {
-            commit('VALID_EMAIL', FormValidation.validateEmail(state.email));
-            if (newEmail) {
-                commit('EMAIL', newEmail.currentTarget.value);
+        handleUsernameChange: ({commit}, newUsername) => {
+            if (newUsername) {
+                commit('USERNAME', newUsername.currentTarget.value);
             }
         },
 
-        handlePasswordChange: ({state, commit}, newPassword) => {
+        handlePasswordChange: ({commit}, newPassword) => {
             if (newPassword) {
                 commit('PASSWORD', newPassword.currentTarget.value);
             }
-            commit('VALID_PASSWORD', state.password !== '');
         },
 
         async loginAction({dispatch}, payload) {
-
-            const data = JSON.stringify(payload);
-
             const config = {
                 method: 'post',
-                url: `${ApiConfig.API_BASE_URL}/security/login`,
+                url: `${ApiConfig.NEW_API_BASE_URL}/security/login`,
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                data: data
+                data: JSON.stringify(payload)
             };
             try {
                 const response = await axios(config);
@@ -52,23 +44,20 @@ export default {
 
                 await router.push({name: 'home'});
             } catch (error) {
-                dispatch('showError', error.response.data.message, {root: true});
+                console.log("errors")
+                dispatch('showError', error.response.data, {root: true});
             }
         }
     },
     getters: {
-        email: (state) => state.email,
+        username: (state) => state.username,
         password: (state) => state.email,
         rememberMe: (state) => state.rememberMe,
-        validEmail: (state) => state.validEmail,
-        validPassword: (state) => state.validPassword,
     },
 
     mutations: {
-        EMAIL: (state, email) => state.email = email,
+        USERNAME: (state, username) => state.username = username,
         PASSWORD: (state, password) => state.password = password,
-        VALID_EMAIL: (state, validEmail) => state.validEmail = validEmail,
-        VALID_PASSWORD: (state, validPassword) => state.validPassword = validPassword,
         REMEMBER_ME: (state, rememberMe) => state.rememberMe = rememberMe
     }
 };

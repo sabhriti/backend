@@ -2,33 +2,42 @@ export default {
     state: {
         alertMessage: '',
         alertType: 'info',
-        isHidden: true
+        isHidden: true,
+        alertClass: ''
     },
     actions: {
-        showError: ({commit}, message) => {
-            console.log('messages: ', message);
+        showError: ({commit, state}, message) => {
             commit('UPDATE_ALERT_MESSAGE', message);
             commit('UPDATE_ALERT_TYPE', "danger");
             commit('SHOW_ALERT');
+
+            if (!state.isHidden) {
+                commit('UPDATE_ALERT_CLASS', `alert alert-${state.alertType}`);
+            } else {
+                commit('UPDATE_ALERT_CLASS', `alert alert-${state.alertType} d-none`);
+            }
         },
 
-        showInfo: ({commit}, message) => {
+        showInfo: ({commit, state}, message) => {
             commit('UPDATE_ALERT_MESSAGE', message);
             commit('UPDATE_ALERT_TYPE', "info");
             commit('SHOW_ALERT');
+
+            commit('UPDATE_ALERT_CLASS', `alert alert-${state.alertType}`);
         },
-        hideAlert: ({commit}) => {
+        hideAlert: ({commit, state}) => {
+            commit('UPDATE_ALERT_CLASS', `alert alert-${state.alertType} d-none`);
             commit('HIDE_ALERT');
         }
     },
     getters: {
         alertMessage: (state) => state.alertMessage,
-        alertType: (state) => state.alertType,
-        isHidden: (state) => state.isHidden
+        alertClass: (state) => state.alertClass
     },
     mutations: {
         UPDATE_ALERT_MESSAGE: (state, message) => state.alertMessage = message,
         UPDATE_ALERT_TYPE: (state, type) => state.alertType = type,
+        UPDATE_ALERT_CLASS: (state, alertClass) => state.alertClass = alertClass,
         SHOW_ALERT: (state) => state.isHidden = false,
         HIDE_ALERT: (state) => state.isHidden = true
     }

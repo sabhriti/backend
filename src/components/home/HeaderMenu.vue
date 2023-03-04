@@ -1,6 +1,6 @@
 <template>
   <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-    <router-link class="navbar-brand px-3 text-info" to="/">VOICESCARRY</router-link>
+    <router-link class="navbar-brand px-3 text-info" to="/">SABHRITI</router-link>
     <div class="navbar-nav">
       <div class="nav-item text-nowrap">
         <a class="nav-link px-3 text-info" href="javascript:void(0);" @click="signOut">Sign out</a>

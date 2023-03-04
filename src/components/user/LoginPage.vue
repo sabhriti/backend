@@ -2,7 +2,6 @@
   <div class="login-form-container">
     <div class="card bg-transparent border-0">
       <form class="card-body">
-
         <div class="form-greetings py-3">
           <h3 class="h3">WELCOME</h3>
         </div>
@@ -11,13 +10,13 @@
         <div class="form-container">
           <div class="login-form">
             <div class="mb-3">
-              <input v-model="email" :class="loginEmailInputClasses" autocomplete="on" placeholder="Email"
-                     type="email"
-                     @input="handleEmailChange"/>
+              <input v-model="username" class="form-control" autocomplete="on" placeholder="Username"
+                     type="text"
+                     @input="handleUsernameChange"/>
             </div>
 
             <div class="mb-3">
-              <input v-model="password" :class="loginPasswordInputClasses" placeholder="Password"
+              <input v-model="password" class="form-control" placeholder="Password"
                      type="password"
                      @input="handlePasswordChange"/>
             </div>
@@ -50,7 +49,7 @@
 
 <script>
 import '@/assets/login.css';
-import {mapActions, mapGetters} from "vuex";
+import {mapActions} from "vuex";
 import CryptoJS from 'crypto-js';
 import AlertBox from "@/components/util/AlertBox";
 
@@ -65,13 +64,12 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getErrorMessage', 'validEmail', 'validPassword', 'validEmail', 'validPassword']),
-    email: {
+    username: {
       get() {
-        return this.$store.state.login.email
+        return this.$store.state.login.username
       },
       set(value) {
-        this.$store.commit('EMAIL', value)
+        this.$store.commit('login/USERNAME', value)
       }
     },
     password: {
@@ -79,7 +77,7 @@ export default {
         return this.$store.state.login.password;
       },
       set(value) {
-        this.$store.commit('PASSWORD', value)
+        this.$store.commit('login/PASSWORD', value)
       }
     },
     rememberMe: {
@@ -87,68 +85,38 @@ export default {
         return this.$store.state.login.rememberMe;
       },
       set(value) {
-        this.$store.commit('REMEMBER_ME', value)
-      }
-    },
-    loginEmailInputClasses: function () {
-      if (this.validEmail) {
-        return {
-          'form-control': true,
-          'is-valid': true,
-          'is-invalid': false
-        }
-      } else {
-        return {
-          'form-control': true,
-          'is-valid': false,
-          'is-invalid': true
-        }
-      }
-    },
-
-    loginPasswordInputClasses: function () {
-      if (this.validPassword) {
-        return {
-          'form-control': true,
-          'is-valid': true,
-          'is-invalid': false
-        }
-      } else {
-        return {
-          'form-control': true,
-          'is-valid': false,
-          'is-invalid': true
-        }
+        this.$store.commit('login/REMEMBER_ME', value)
       }
     }
   },
   methods: {
-    ...mapActions(['loginAction', 'handleEmailChange', 'handlePasswordChange']),
+    ...mapActions({
+      loginAction: 'login/loginAction',
+      handleUsernameChange: 'login/handleUsernameChange',
+      handlePasswordChange: 'login/handlePasswordChange'
+    }),
 
     encryptPassword(password) {
       return CryptoJS.AES.encrypt(password, 'test').toString();
     },
 
     loginConfirm() {
-      this.formValidated = true;
-      if (this.validEmail && this.validPassword) {
-        if (this.rememberMe === true) {
-          const rememberMe = {
-            email: this.email,
-            password: this.encryptPassword(this.password)
-          };
-          localStorage.removeItem("remember_me");
-          localStorage.setItem("remember_me", JSON.stringify(rememberMe));
-        } else {
-          localStorage.removeItem("remember_me");
-        }
-
-        this.loginAction(
-            {
-              email: this.email,
-              password: this.password
-            });
+      if (this.rememberMe === true) {
+        const rememberMe = {
+          username: this.username,
+          password: this.encryptPassword(this.password)
+        };
+        localStorage.removeItem("remember_me");
+        localStorage.setItem("remember_me", JSON.stringify(rememberMe));
+      } else {
+        localStorage.removeItem("remember_me");
       }
+
+      this.loginAction(
+          {
+            username: this.username,
+            password: this.password
+          });
     }
   },
 
@@ -157,14 +125,13 @@ export default {
     if (itemFromLocalStorage) {
       const bytes = CryptoJS.AES.decrypt(itemFromLocalStorage.password, 'test');
       this.password = bytes.toString(CryptoJS.enc.Utf8)
-      this.email = itemFromLocalStorage.email;
-      this.emailValid = true;
+      this.username = itemFromLocalStorage.username;
       this.rememberMe = true
     }
   },
   mounted() {
-    this.$store.dispatch("handleEmailChange");
-    this.$store.dispatch("handlePasswordChange");
+    this.$store.dispatch("login/handleUsernameChange");
+    this.$store.dispatch("login/handlePasswordChange");
 
     this.$store.dispatch('hideAlert');
   }
