@@ -32,7 +32,7 @@
 
               <div class="mb-3">
                 <button class="btn btn-info login-button" @click="registerAction">Register</button>
-                <router-link class="btn btn-info login-button" to="/user/login">Back</router-link>
+                <router-link class="btn btn-info login-button" to="/security/login">Back</router-link>
               </div>
             </form>
           </div>

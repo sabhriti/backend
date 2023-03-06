@@ -28,6 +28,8 @@ import TranslationForm from "@/components/translation/TranslationForm";
 import TranslationComponent from "@/components/translation/TranslationComponent";
 import TranslationKeyForm from "@/components/translation/TranslationKeyForm";
 import SecurityIndex from "@/components/security/SecurityIndex.vue";
+import UserList from "@/components/user/UserList.vue";
+import PageNotFound from "@/components/util/PageNotFound.vue";
 
 const routes = [
     {
@@ -113,7 +115,14 @@ const routes = [
             {
                 path: '/users',
                 name: 'UserComponent',
-                component: UserComponent
+                component: UserComponent,
+                children: [
+                    {
+                        path: '',
+                        name: 'UserList',
+                        component: UserList
+                    },
+                ]
             },
             {
                 path: '/factory/',
@@ -175,6 +184,10 @@ const routes = [
                     }
                 ]
             },
+            {
+                path: "/:pathMatch(.*)*",
+                component: PageNotFound
+            }
         ]
     },
     {

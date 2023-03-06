@@ -10,12 +10,15 @@ export default {
 
     actions: {
         async fetchAllUsers({commit, dispatch}) {
+
             try {
                 const response = await axios({
                     method: 'get',
-                    url: `${ApiConfig.API_BASE_URL}/users/all`
+                    url: `${ApiConfig.NEW_API_BASE_URL}/users`
                 });
-                commit('UPDATE_ALL_USERS', response.data.data);
+
+                console.log( response.data)
+                commit('UPDATE_ALL_USERS', response.data);
             } catch (error) {
                 dispatch('showError', "Failed loading users from database.", {root: true});
             }
@@ -24,7 +27,7 @@ export default {
         async deleteUser({commit, dispatch}, userId) {
             const config = {
                 method: 'delete',
-                url: `${ApiConfig.API_BASE_URL}/users/${userId}`,
+                url: `${ApiConfig.NEW_API_BASE_URL}/users/${userId}`,
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -44,7 +47,7 @@ export default {
 
             const config = {
                 method: 'post',
-                url: `${ApiConfig.API_BASE_URL}/users/status/${user._id}`,
+                url: `${ApiConfig.NEW_API_BASE_URL}/users/status/${user._id}`,
                 headers: {
                     'Content-Type': 'application/json'
                 },
