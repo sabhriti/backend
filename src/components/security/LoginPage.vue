@@ -36,9 +36,9 @@
         </div>
 
         <div class="form-register footer mt-auto">
-          <router-link class="footer-link text-info" to="/user/forget-password">Forgot Password</router-link>
+          <router-link class="footer-link text-info" to="/security/forget-password">Forgot Password</router-link>
           |
-          <router-link class="footer-link text-info" to="/user/register">Register</router-link>
+          <router-link class="footer-link text-info" to="/security/register">Register</router-link>
         </div>
 
       </form>

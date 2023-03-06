@@ -1,11 +1,10 @@
 import {createRouter, createWebHashHistory} from 'vue-router';
-import UserLoginPage from "@/components/user/LoginPage";
-import UserForgetPassword from "@/components/user/ForgetPassword";
-import UserRegistrationPage from "@/components/user/RegistrationPage";
-import UserRegistrationSuccess from "@/components/user/RegistrationSuccess";
+import UserLoginPage from "@/components/security/LoginPage";
+import UserForgetPassword from "@/components/security/ForgetPassword";
+import UserRegistrationPage from "@/components/security/RegistrationPage";
+import UserRegistrationSuccess from "@/components/security/RegistrationSuccess";
 import DashboardHome from "@/components/home/DashboardHome";
-import UserIndex from "@/components/user/UserIndex";
-import UsersComponent from "@/components/user/UsersComponent";
+import UserComponent from "@/components/user/UserComponent";
 import SurveysComponent from "@/components/survey/SurveysComponent";
 import QuestionComponent from "@/components/question/QuestionComponent";
 import QuestionForm from "@/components/question/QuestionForm";
@@ -28,20 +27,27 @@ import TranslationList from "@/components/translation/TranslationList";
 import TranslationForm from "@/components/translation/TranslationForm";
 import TranslationComponent from "@/components/translation/TranslationComponent";
 import TranslationKeyForm from "@/components/translation/TranslationKeyForm";
+import SecurityIndex from "@/components/security/SecurityIndex.vue";
 
 const routes = [
     {
         path: '/',
         name: 'home',
         component: DashboardHome,
-        meta: {requiresAuth: true},
+        meta: {
+            requiresAuth: true,
+            requiredRoles: ['ADMIN', 'USER']
+        },
 
     },
     {
         path: '/admin',
         component: AdminIndex,
         name: 'adminHome',
-        meta: {requiresAuth: true},
+        meta: {
+            requiresAuth: true,
+            requiredRoles: ['ADMIN', 'USER']
+        },
         children: [
             {
                 path: '/surveys/',
@@ -106,8 +112,8 @@ const routes = [
             },
             {
                 path: '/users',
-                name: 'UsersComponent',
-                component: UsersComponent
+                name: 'UserComponent',
+                component: UserComponent
             },
             {
                 path: '/factory/',
@@ -130,6 +136,10 @@ const routes = [
                 path: '/language/',
                 name: 'LanguageComponent',
                 component: LanguageComponent,
+                meta: {
+                    requiresAuth: false,
+                    requiredRoles: ['ADMIN']
+                },
                 children: [
                     {
                         path: '',
@@ -168,9 +178,12 @@ const routes = [
         ]
     },
     {
-        path: '/user/',
-        name: 'users',
-        component: UserIndex,
+        path: '/security/',
+        component: SecurityIndex,
+        meta: {
+            requiresAuth: false,
+            requiredRoles: []
+        },
         children: [
             {
                 path: 'login',
@@ -192,7 +205,7 @@ const routes = [
                 name: 'userRegistrationSuccess',
                 component: UserRegistrationSuccess
             }
-        ],
+        ]
     }
 ];
 
@@ -202,9 +215,33 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-    const session = localStorage.getItem('session');
-    if (to.meta.requiresAuth && !session) {
+    const sessionData = localStorage.getItem('session');
+
+    if (to.meta.requiresAuth && !sessionData) {
         return next({name: 'userLoginPage'});
+    }
+
+    if (sessionData) {
+        const sessionParsed = JSON.parse(atob(sessionData.split('.')[1]));
+
+        if (to.meta.requiredRoles.length <= 0) {
+            return next();
+        } else {
+            let canSee = false;
+
+            sessionParsed.ROLES.forEach(role => {
+                if (to.meta.requiredRoles.includes(role)) {
+                    canSee = true
+                }
+            });
+
+            if (canSee) {
+                return next();
+            } else {
+                console.log("Unauthorized");
+                return next({name: 'home'});
+            }
+        }
     }
 
     return next();

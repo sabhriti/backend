@@ -35,9 +35,10 @@ export default {
             };
             try {
                 const response = await axios(config);
+
                 const sessionData = {
-                    token: response.data.token,
-                    email: payload.email
+                    token: response.data,
+                    username: payload.username
                 };
 
                 localStorage.setItem("session", JSON.stringify(sessionData));
@@ -51,7 +52,7 @@ export default {
     },
     getters: {
         username: (state) => state.username,
-        password: (state) => state.email,
+        password: (state) => state.password,
         rememberMe: (state) => state.rememberMe,
     },
 

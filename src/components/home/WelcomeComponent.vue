@@ -15,7 +15,7 @@ export default {
 
   created() {
     const session = JSON.parse(localStorage.getItem("session"));
-    this.text = "Welcome " + session.email;
+    this.text = "Welcome " + session.username;
   }
 }
 </script>

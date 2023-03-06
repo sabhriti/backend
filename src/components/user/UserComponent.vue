@@ -52,7 +52,7 @@ import {mapActions, mapGetters} from "vuex";
 import AlertBox from "@/components/util/AlertBox";
 
 export default {
-  name: "UsersComponent",
+  name: "UserComponent",
   components: {
     AlertBox,
     DeleteConfirmationModel,
