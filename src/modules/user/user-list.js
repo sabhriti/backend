@@ -3,6 +3,7 @@ import axios from "axios";
 import ApiConfig from "@/config/ApiConfig";
 
 export default {
+    namespaced: true,
     state: {
         allUsers: [],
         activeToggleRequests: [],

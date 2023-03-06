@@ -33,6 +33,7 @@ import PageNotFound from "@/components/util/PageNotFound.vue";
 import UserProfile from "@/components/setting/UserProfile.vue";
 import UserPreferences from "@/components/setting/UserPreferences.vue";
 import SettingComponent from "@/components/setting/SettingComponent.vue";
+import UserForm from "@/components/user/UserForm.vue";
 
 const routes = [
     {
@@ -124,6 +125,11 @@ const routes = [
                         path: '',
                         name: 'UserList',
                         component: UserList
+                    },
+                    {
+                        path: 'form/id=:id?',
+                        name: 'UserForm',
+                        component: UserForm
                     },
                 ]
             },

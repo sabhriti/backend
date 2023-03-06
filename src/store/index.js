@@ -8,6 +8,7 @@ import questionForm from "@/modules/question/question-form";
 import answerTypeForm from "@/modules/answer/answer-type-form";
 import answerTypeList from "@/modules/answer/answer-type-list";
 import userList from "@/modules/user/user-list";
+import userForm from "@/modules/user/user-form";
 import alertBox from "@/modules/util/alert-box";
 import surveyList from "@/modules/survey/survey-list";
 import surveyAnswerList from "@/modules/survey/survey-answer-list";
@@ -35,6 +36,7 @@ export default createStore({
         factoryList,
         factoryForm,
         userList,
+        userForm,
         alertBox,
         languageForm,
         languageList,

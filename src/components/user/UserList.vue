@@ -19,10 +19,14 @@
       <td>{{ user.roles.map(x => x.name).join(", ") }}</td>
       <td>{{ user.name }}</td>
       <td class="text-center">
+        <UserStatus :activationStatus="user.activationStatus"/>
       </td>
       <td class="text-center">
-        <a href="javascript:void(0);" v-if=" !user.isAdmin">
-          <span :data-bs-target="'#deleteUser' + user._id" class="material-icons-outlined text-danger"
+        <router-link :to="`/users/form/id=${user.id}`" class="material-icons text-decoration-none text-info"
+                     title="Edit User">edit
+        </router-link>
+        <a v-if=" !user.isAdmin" href="javascript:void(0);">
+          <span :data-bs-target="'#deleteUser' + user.id" class="material-icons-outlined text-danger"
                 data-bs-toggle="modal" title="Delete User">delete</span>
         </a>
       </td>
@@ -33,14 +37,26 @@
 
 <script>
 import {mapActions, mapGetters} from "vuex";
+import UserStatus from "@/components/user/UserStatus.vue";
 
 export default {
   name: "UserList",
+  components: {UserStatus},
   methods: {
-    ...mapActions(['fetchAllUsers', 'deleteUser']),
+    ...mapActions(
+        {
+          fetchAllUsers: 'userList/fetchAllUsers',
+          deleteUser: 'userList/deleteUser'
+        }
+    ),
   },
   computed: {
-    ...mapGetters(['allUsers', 'activeToggleRequests'])
+    ...mapGetters(
+        {
+          allUsers: 'userList/allUsers',
+          activeToggleRequests: 'userList/activeToggleRequests'
+        }
+    )
   },
 
   mounted() {
