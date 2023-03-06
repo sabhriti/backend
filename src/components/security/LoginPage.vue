@@ -132,8 +132,6 @@ export default {
   mounted() {
     this.$store.dispatch("login/handleUsernameChange");
     this.$store.dispatch("login/handlePasswordChange");
-
-    this.$store.dispatch('hideAlert');
   }
 }
 </script>

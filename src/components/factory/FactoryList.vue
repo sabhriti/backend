@@ -62,7 +62,6 @@ export default {
     ...mapGetters(['allFactories'])
   },
   mounted() {
-    this.$store.dispatch('hideAlert');
     this.fetchAllFactories();
   }
 }

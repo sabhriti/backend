@@ -1,9 +1,9 @@
 <template>
-  <router-view></router-view>
+  <div>asdsad</div>
 </template>
 
 <script>
 export default {
-  name: "SecurityIndex"
+  name: "UserPreferences"
 }
 </script>

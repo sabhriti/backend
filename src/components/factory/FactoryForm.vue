@@ -77,7 +77,6 @@ export default {
     ...mapActions(['fetchFactoryById', 'saveFactory']),
   },
   mounted() {
-    this.$store.dispatch('hideAlert');
     this.fetchFactoryById(this.$route.params.id);
   },
 }

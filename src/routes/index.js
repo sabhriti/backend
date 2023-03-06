@@ -30,6 +30,9 @@ import TranslationKeyForm from "@/components/translation/TranslationKeyForm";
 import SecurityIndex from "@/components/security/SecurityIndex.vue";
 import UserList from "@/components/user/UserList.vue";
 import PageNotFound from "@/components/util/PageNotFound.vue";
+import UserProfile from "@/components/setting/UserProfile.vue";
+import UserPreferences from "@/components/setting/UserPreferences.vue";
+import SettingComponent from "@/components/setting/SettingComponent.vue";
 
 const routes = [
     {
@@ -181,6 +184,23 @@ const routes = [
                         path: 'key/form',
                         name: 'TranslationKeyForm',
                         component: TranslationKeyForm
+                    }
+                ]
+            },
+            {
+                path: '/setting/',
+                name: 'SettingComponent',
+                component: SettingComponent,
+                children: [
+                    {
+                        path: 'profile',
+                        name: 'UserProfile',
+                        component: UserProfile
+                    },
+                    {
+                        path: 'preferences',
+                        name: 'UserPreferences',
+                        component: UserPreferences
                     }
                 ]
             },

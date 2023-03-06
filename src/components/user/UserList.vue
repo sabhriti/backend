@@ -44,12 +44,7 @@ export default {
   },
 
   mounted() {
-    this.$store.dispatch('hideAlert');
     this.fetchAllUsers();
   }
 }
 </script>
-
-<style scoped>
-
-</style>

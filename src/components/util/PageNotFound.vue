@@ -5,8 +5,8 @@
         <p class="oops-icon">(^-^*)</p>
         <h1 class="hoppla mb-5">Hoppla !!! </h1>
         <p class="mb-3 h4">This page does not exists.</p>
-        <a class="h5 btn btn-sm btn-outline-info" href="javascript: history.back();">
-          <span class="material-icons-outlined me-2">arrow_back</span><span class="h5">take me back</span></a>
+        <button class="h5 btn btn-sm btn-outline-info" @click="$router.go(-1)">
+          <span class="material-icons-outlined me-2">arrow_back</span><span class="h5">take me back</span></button>
       </div>
     </div>
   </div>

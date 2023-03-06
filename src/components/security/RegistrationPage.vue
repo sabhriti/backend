@@ -107,9 +107,6 @@ export default {
           registerAction: 'registration/registerAction'
         }
     )
-  },
-  mounted() {
-    this.$store.dispatch('hideAlert');
   }
 }
 

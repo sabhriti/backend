@@ -58,9 +58,6 @@ export default {
         this.emailValid = false;
       }
     },
-  },
-  mounted() {
-    this.$store.dispatch('hideAlert');
   }
 }
 
