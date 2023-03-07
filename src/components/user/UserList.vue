@@ -18,9 +18,7 @@
       <td>{{ user.email }}</td>
       <td>{{ user.roles.map(x => x.name).join(", ") }}</td>
       <td>{{ user.name }}</td>
-      <td class="text-center">
-        <UserStatus :activationStatus="user.activationStatus"/>
-      </td>
+      <td class="text-center"> {{user.activationStatus.toUpperCase()}}</td>
       <td class="text-center">
         <router-link :to="`/users/form/id=${user.id}`" class="material-icons text-decoration-none text-info"
                      title="Edit User">edit
@@ -37,11 +35,10 @@
 
 <script>
 import {mapActions, mapGetters} from "vuex";
-import UserStatus from "@/components/user/UserStatus.vue";
 
 export default {
   name: "UserList",
-  components: {UserStatus},
+  components: {},
   methods: {
     ...mapActions(
         {

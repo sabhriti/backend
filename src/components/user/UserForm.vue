@@ -4,13 +4,13 @@
     <div class="mb-3 row">
       <label class="col-sm-2 col-form-label d-flex justify-content-start" for="username">Username</label>
       <input v-model="username" class="form-control-color col-sm-3" name="username" placeholder="Username"
-             type="text" required/>
+             required type="text"/>
     </div>
 
     <div class="mb-3 row">
       <label class="col-sm-2 col-form-label d-flex justify-content-start" for="email">Email</label>
       <input v-model="email" class="col-4 form-control-color" name="email" placeholder="Email"
-             type="text" required/>
+             required type="text"/>
     </div>
     <div class="mb-3 row">
       <label class="col-sm-2 col-form-label d-flex justify-content-start" for="name">Name</label>
@@ -22,7 +22,7 @@
       <div class="form-control-color d-flex justify-content-start">
         <template v-for="role in rolesList" :key="role">
           <div class="form-check form-check-inline">
-            <input :id="role" v-model="roles" :value="role" class="form-check-input" type="checkbox" required>
+            <input :id="role" v-model="roles" class="form-check-input" type="checkbox" v-bind:value="role">
             <label :for="role" class="form-check-label"> {{ role.toUpperCase() }}</label>
           </div>
         </template>

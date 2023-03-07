@@ -11,7 +11,7 @@ export default {
         name: '',
         roles: [],
         activationStatus: '',
-        userId: ''
+        id: ''
     },
     actions: {
         async fetchUserById({commit, dispatch}, userId) {
@@ -30,8 +30,9 @@ export default {
                         commit('UPDATE_USERNAME', response.data.username);
                         commit('UPDATE_EMAIL', response.data.email);
                         commit('UPDATE_NAME', response.data.name);
-                        commit('UPDATE_ROLES', response.data.roles);
+                        commit('UPDATE_ROLES', response.data.roles.map(role => role.name));
                         commit('UPDATE_STATUS', response.data.activationStatus);
+                        commit('UPDATE_USER_ID', response.data.id);
                     }
 
                     console.log(this.state.userForm)
@@ -72,9 +73,13 @@ export default {
                     username: state.username,
                     email: state.email,
                     name: state.name,
-                    roles: state.roles,
+                    roles: state.roles.map(role => {
+                        return {
+                            name: role
+                        };
+                    }),
                     status: state.activationStatus,
-                    id: state.userId
+                    id: state.id
                 };
 
                 const config = {
@@ -101,8 +106,8 @@ export default {
         UPDATE_USERNAME: (state, username) => state.username = username,
         UPDATE_EMAIL: (state, email) => state.email = email,
         UPDATE_NAME: (state, name) => state.name = name,
-        UPDATE_ROLES: (state, role) => state.roles.push(role),
+        UPDATE_ROLES: (state, role) => state.roles = role,
         UPDATE_STATUS: (state, activationStatus) => state.activationStatus = activationStatus,
-        UPDATE_USER_ID: (state, id) => state.userId = id,
+        UPDATE_USER_ID: (state, id) => state.id = id,
     }
 }
