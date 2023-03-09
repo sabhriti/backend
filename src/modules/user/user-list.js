@@ -18,7 +18,6 @@ export default {
                     url: `${ApiConfig.NEW_API_BASE_URL}/users`
                 });
 
-                console.log( response.data)
                 commit('UPDATE_ALL_USERS', response.data);
             } catch (error) {
                 dispatch('showError', "Failed loading users from database.", {root: true});
@@ -28,7 +27,7 @@ export default {
         async deleteUser({commit, dispatch}, userId) {
             const config = {
                 method: 'delete',
-                url: `${ApiConfig.NEW_API_BASE_URL}/users/${userId}`,
+                url: `${ApiConfig.NEW_API_BASE_URL}/users/id=${userId}`,
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -41,30 +40,6 @@ export default {
             } catch (error) {
                 dispatch('showError', " Failed deleting the User.", {root: true});
             }
-        },
-
-        async toggleUserStatus({commit, dispatch}, user) {
-            commit('ADD_USER_ID_TO_ACTIVE_TOGGLE_REQUEST', user._id);
-
-            const config = {
-                method: 'post',
-                url: `${ApiConfig.NEW_API_BASE_URL}/users/status/${user._id}`,
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                data: {
-                    "status": user.isActive ? "inactive" : "active"
-                }
-            };
-
-            try {
-                await axios(config);
-                user.isActive = !user.isActive;
-                commit('UPDATE_SINGLE_USER', user);
-                commit('REMOVE_USER_ID_FROM_ACTIVE_TOGGLE_REQUEST', user._id);
-            } catch (error) {
-                dispatch('showError', " Failed activating user. Please try again.", {root: true});
-            }
         }
     },
 
@@ -75,12 +50,6 @@ export default {
 
     mutations: {
         UPDATE_ALL_USERS: (state, userList) => state.allUsers = userList,
-        UPDATE_SINGLE_USER: (state, userToUpdate) => {
-            const index = state.allUsers.findIndex((user => user._id === userToUpdate._id));
-            state.allUsers[index] = userToUpdate;
-        },
-        ADD_USER_ID_TO_ACTIVE_TOGGLE_REQUEST: (state, userId) => state.activeToggleRequests.push(userId),
-        REMOVE_USER_ID_FROM_ACTIVE_TOGGLE_REQUEST: (state, userId) => state.activeToggleRequests = state.activeToggleRequests.filter(id => userId !== id),
-        REMOVE_USER_FROM_THE_LIST_BY_ID: (state, userId) => state.allUsers = state.allUsers.filter(user => userId !== user._id),
+        REMOVE_USER_FROM_THE_LIST_BY_ID: (state, userId) => state.allUsers = state.allUsers.filter(user => userId !== user.id),
     }
 }

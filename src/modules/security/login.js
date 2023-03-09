@@ -45,8 +45,14 @@ export default {
 
                 await router.push({name: 'home'});
             } catch (error) {
-                console.log("errors")
-                dispatch('showError', error.response.data, {root: true});
+
+                console.error(error.response.data);
+
+                if (error.response.status === 500) {
+                    dispatch('showError', "Something went wrong. Please try again.", {root: true});
+                } else {
+                    dispatch('showError', error.response.data, {root: true});
+                }
             }
         }
     },

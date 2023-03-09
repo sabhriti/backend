@@ -8,6 +8,11 @@ export default {
 
 // ad authentication headers to each http request.
 axios.interceptors.request.use(function (config) {
-    config.headers.Authorization = 'Bearer ' + JSON.parse(localStorage.getItem('session')).token;
+    const session =   JSON.parse(localStorage.getItem('session'));
+
+    if (session && session.token) {
+        config.headers.Authorization = `Bearer ${session.token}`;
+    }
+
     return config;
 });

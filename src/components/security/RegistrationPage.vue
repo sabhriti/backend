@@ -1,43 +1,58 @@
 <template>
-  <div class="login-form-container">
-    <div class="card bg-transparent border-0">
-      <div class="card-body">
-        <AlertBox/>
-
-        <div class="form-greetings py-3">
+  <div class="px-4 py-5 my-5 text-center">
+    <div class="col-lg-6 mx-auto">
+      <div class="card bg-transparent ">
+        <div class="card-header border-success ">
           <h3 class="h3">Register</h3>
         </div>
+        <div class="card-body">
+          <AlertBox/>
 
-        <div class="form-container">
-          <div class="login-form">
-            <form>
-              <div class="mb-3">
-                <input v-model="email" :class="emailClass" placeholder="Email" type="email"/>
+          <div class="container text-start">
+            <div class="row">
+
+              <div class="col-6 col-sm-3 fw-bold text-uppercase">Full name:</div>
+              <div class="col-6 col-sm-6 ">
+                <input v-model="name" class="form-control" placeholder="name" type="text"/>
               </div>
+              <div class="w-100 mt-4"></div>
 
-              <div class="mb-3">
-                <input v-model="username" :class="usernameClass" placeholder="Username" type="text"/>
+              <div class="col-6 col-sm-3 fw-bold text-uppercase">email:</div>
+              <div class="col-6 col-sm-6 ">
+                <input v-model="email" class="form-control" placeholder="e-mail" type="email"/>
               </div>
+              <div class="w-100 mt-4"></div>
 
-              <div class="mb-3">
-                <input v-model="password" :class="passwordClass" placeholder="Password"
+              <div class="col-6 col-sm-3 fw-bold text-uppercase">Username:</div>
+              <div class="col-6 col-sm-6 ">
+                <input v-model="username" class="form-control" placeholder="username" type="text"/>
+              </div>
+              <div class="w-100 mt-4"></div>
+
+
+              <div class="col-6 col-sm-3 fw-bold text-uppercase">Password:</div>
+              <div class="col-6 col-sm-6 ">
+                <input v-model="password" class="form-control" placeholder="password"
                        type="password"/>
               </div>
+              <div class="w-100 mt-4"></div>
 
-              <div class="mb-3">
-                <input v-model="passwordRepeat" :class="passwordRepeatClass"
-                       placeholder="Repeat Password"
+
+              <div class="col-6 col-sm-3 fw-bold text-uppercase">Repeat Password:</div>
+              <div class="col-6 col-sm-6 ">
+                <input v-model="passwordRepeat" class="form-control"
+                       placeholder="re-enter password"
                        type="password"/>
               </div>
+              <div class="w-100 mt-4"></div>
 
-              <div class="mb-3">
-                <button class="btn btn-info login-button" @click="registerAction">Register</button>
-                <router-link class="btn btn-info login-button" to="/security/login">Back</router-link>
-              </div>
-            </form>
+            </div>
           </div>
         </div>
-
+        <div class="card-footer bg-transparent border-success">
+          <button class="btn btn-success me-2" @click="registerAction">Register</button>
+          <router-link class="btn btn-danger " to="/security/login">Cancel</router-link>
+        </div>
       </div>
     </div>
   </div>
@@ -46,7 +61,7 @@
 
 <script>
 import '@/assets/login.css';
-import {mapActions, mapGetters} from "vuex";
+import {mapActions} from "vuex";
 import AlertBox from "@/components/util/AlertBox";
 
 export default {
@@ -54,23 +69,21 @@ export default {
   components: {
     AlertBox
   },
-
   computed: {
-    ...mapGetters(
-        {
-          usernameClass: 'registration/usernameClass',
-          passwordClass: 'registration/passwordClass',
-          emailClass: 'registration/emailClass',
-          passwordRepeatClass: 'registration/passwordRepeatClass'
-        }
-    ),
+    name: {
+      get() {
+        return this.$store.state.login.name;
+      },
+      set(value) {
+        this.$store.commit('registration/NAME', value);
+      }
+    },
     email: {
       get() {
         return this.$store.state.login.email;
       },
       set(value) {
         this.$store.commit('registration/EMAIL', value);
-        this.$store.commit('registration/EMAIL_CLASS');
       }
     },
     username: {
@@ -79,7 +92,6 @@ export default {
       },
       set(value) {
         this.$store.commit('registration/USERNAME', value);
-        this.$store.commit('registration/USERNAME_CLASS');
       }
     },
     password: {
@@ -88,7 +100,6 @@ export default {
       },
       set(value) {
         this.$store.commit('registration/PASSWORD', value);
-        this.$store.commit('registration/PASSWORD_CLASS');
       }
     },
     passwordRepeat: {
@@ -97,7 +108,6 @@ export default {
       },
       set(value) {
         this.$store.commit('registration/PASSWORD_REPEAT', value);
-        this.$store.commit('registration/PASSWORD_REPEAT_CLASS');
       }
     }
   },
@@ -111,12 +121,3 @@ export default {
 }
 
 </script>
-
-<style scoped>
-.login-button {
-  min-width: 25%;
-  margin: 1rem;
-
-}
-
-</style>

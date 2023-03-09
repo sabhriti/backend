@@ -2,6 +2,8 @@ import {createStore} from 'vuex'
 
 import login from '@/modules/security/login';
 import registration from "@/modules/security/registration";
+import passwordResetForm from "@/modules/security/password-reset-form";
+import userProfile from "@/modules/setting/user-profile";
 import feedbackList from "@/modules/feedback/feedback-list";
 import questionList from "@/modules/question/question-list";
 import questionForm from "@/modules/question/question-form";
@@ -25,6 +27,8 @@ export default createStore({
     modules: {
         login,
         registration,
+        passwordResetForm,
+        userProfile,
         feedbackList,
         questionList,
         questionForm,

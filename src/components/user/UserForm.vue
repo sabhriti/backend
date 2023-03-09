@@ -20,7 +20,7 @@
     <div class="mb-3 row">
       <label class="col-sm-2 col-form-label d-flex justify-content-start" for="roles">Roles</label>
       <div class="form-control-color d-flex justify-content-start">
-        <template v-for="role in rolesList" :key="role">
+        <template v-for="role in SecurityConfig.AVAILABLE_USER_ROLES" :key="role">
           <div class="form-check form-check-inline">
             <input :id="role" v-model="roles" class="form-check-input" type="checkbox" v-bind:value="role">
             <label :for="role" class="form-check-label"> {{ role.toUpperCase() }}</label>
@@ -32,7 +32,7 @@
     <div class="mb-3 row">
       <label class="col-sm-2 col-form-label d-flex justify-content-start" for="userStatus">Status</label>
       <select v-model="userStatus" class="form-select form-control-color">
-        <option v-for="status in statusList" :key="status" :value="status">{{ status.toUpperCase() }}</option>
+        <option v-for="status in SecurityConfig.AVAILABLE_USER_STATUSES" :key="status" :value="status">{{ status.toUpperCase() }}</option>
       </select>
     </div>
 
@@ -45,17 +45,12 @@
 
 <script>
 import AlertBox from "@/components/util/AlertBox.vue";
+import SecurityConfig from "@/config/SecurityConfig";
 import {mapActions} from "vuex";
 
 export default {
   name: "UserForm",
   components: {AlertBox},
-  data() {
-    return {
-      statusList: ['new', 'active', 'inactive', 'disabled'],
-      rolesList: ['USER', 'ADMIN']
-    };
-  },
   methods: {
     ...mapActions({
       fetchUserById: 'userForm/fetchUserById',
@@ -66,6 +61,9 @@ export default {
     this.fetchUserById(this.$route.params.id);
   },
   computed: {
+    SecurityConfig() {
+      return SecurityConfig
+    },
     username: {
       get() {
         return this.$store.state.userForm.username
@@ -111,6 +109,10 @@ export default {
 </script>
 
 <style scoped>
+.form-control-color:not(:disabled):not([readonly]) {
+  cursor: text;
+}
+
 .form-control-color {
   width: 25rem;
 }

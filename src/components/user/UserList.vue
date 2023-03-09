@@ -1,4 +1,6 @@
 <template>
+  <AlertBox/>
+  <router-link class="btn btn-success mb-2" style="float: right;" to="/users/form/id=">Add</router-link>
   <table class="table bg-dark text-info text-lg-start">
     <thead class="table-bordered">
     <tr class="text-white">
@@ -16,17 +18,33 @@
       <td>{{ index + 1 }}</td>
       <td>{{ user.username }}</td>
       <td>{{ user.email }}</td>
-      <td>{{ user.roles.map(x => x.name).join(", ") }}</td>
+      <td>{{ user.roles.join(", ") }}</td>
       <td>{{ user.name }}</td>
-      <td class="text-center"> {{user.activationStatus.toUpperCase()}}</td>
+      <td class="text-center"> {{ user.activationStatus.toUpperCase() }}</td>
       <td class="text-center">
         <router-link :to="`/users/form/id=${user.id}`" class="material-icons text-decoration-none text-info"
                      title="Edit User">edit
         </router-link>
-        <a v-if=" !user.isAdmin" href="javascript:void(0);">
-          <span :data-bs-target="'#deleteUser' + user.id" class="material-icons-outlined text-danger"
-                data-bs-toggle="modal" title="Delete User">delete</span>
+        <a :data-bs-target="`#deleteUser_${user.id}`" data-bs-toggle="modal" href="javascript:void(0);" v-if="!isCurrentUser(user)">
+          <span class="material-icons-outlined text-danger" title="Delete User">delete</span>
         </a>
+
+        <div :id="`deleteUser_${user.id}`" aria-hidden="true" class="modal fade" tabindex="-1">
+          <div class="modal-dialog">
+            <div class="modal-content">
+
+              <div class="modal-body text-danger">
+                Are you sure you want to delete <b>{{ user.name }}?</b>
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-danger" data-bs-dismiss="modal" type="button"
+                        @click="deleteUser(user.id)">Yes
+                </button>
+                <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">No</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </td>
     </tr>
     </tbody>
@@ -35,10 +53,11 @@
 
 <script>
 import {mapActions, mapGetters} from "vuex";
+import AlertBox from "@/components/util/AlertBox.vue";
 
 export default {
   name: "UserList",
-  components: {},
+  components: {AlertBox},
   methods: {
     ...mapActions(
         {
@@ -46,6 +65,9 @@ export default {
           deleteUser: 'userList/deleteUser'
         }
     ),
+    isCurrentUser: function (user) {
+      return JSON.parse(localStorage.getItem('session')).username === user.username;
+    },
   },
   computed: {
     ...mapGetters(

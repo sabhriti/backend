@@ -34,6 +34,8 @@ import UserProfile from "@/components/setting/UserProfile.vue";
 import UserPreferences from "@/components/setting/UserPreferences.vue";
 import SettingComponent from "@/components/setting/SettingComponent.vue";
 import UserForm from "@/components/user/UserForm.vue";
+import UserProfileForm from "@/components/setting/UserProfileForm.vue";
+import NewPasswordForm from "@/components/security/NewPasswordForm.vue";
 
 const routes = [
     {
@@ -204,6 +206,11 @@ const routes = [
                         component: UserProfile
                     },
                     {
+                        path: 'profile/edit',
+                        name: 'UserProfileForm',
+                        component: UserProfileForm
+                    },
+                    {
                         path: 'preferences',
                         name: 'UserPreferences',
                         component: UserPreferences
@@ -230,6 +237,12 @@ const routes = [
                 component: UserLoginPage
             },
             {
+                path: 'create-password/token=:token?',
+                name: 'NewPasswordForm',
+                component: NewPasswordForm
+
+            },
+            {
                 path: 'forget-password',
                 name: 'userForgetPassword',
                 component: UserForgetPassword
@@ -248,6 +261,8 @@ const routes = [
     }
 ];
 
+// http://localhost:8080/?#/security/create-password/token=xx
+// http://127.0.1.1:9090/security/create-password/token=$2a$10$DtMvcUCYU0aV7kUk3pUCHegyXe1wvGM/Rwd1NbeLr.7FZLiwgs8FS
 const router = createRouter({
     history: createWebHashHistory(),
     routes

@@ -15,10 +15,12 @@
     <tr v-for="(factory, index) in allFactories" v-bind:key="index">
       <th scope="col">{{ index + 1 }}</th>
       <th scope="col">{{ factory.name }}</th>
-      <th scope="col">{{ factory.city }}, {{ factory.country}}</th>
+      <th scope="col">{{ factory.city }}, {{ factory.country }}</th>
       <th scope="col">{{ factory.code }}</th>
       <th scope="col">
-        <router-link :to="`/factory/form/id=${factory._id}`" class="material-icons text-decoration-none text-info" title="Edit Factory">edit</router-link>
+        <router-link :to="`/factory/form/id=${factory._id}`" class="material-icons text-decoration-none text-info"
+                     title="Edit Factory">edit
+        </router-link>
         <a :data-bs-target="`#deleteFactory_${factory._id}`" data-bs-toggle="modal" href="javascript:void(0);">
           <span class="material-icons-outlined text-danger" title="Delete Factory">delete</span>
         </a>
