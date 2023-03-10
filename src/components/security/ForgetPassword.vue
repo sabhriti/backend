@@ -1,74 +1,75 @@
 <template>
-  <div class="login-form-container">
-    <div class="card bg-transparent border-0">
-      <div class="card-body">
+  <div class="px-4 py-5 my-5 text-center">
+    <div class="col-lg-4 mx-auto">
 
-        <div class="form-greetings py-3">
-          <h3 class="h3">Password Reset</h3>
+      <div class="card bg-transparent">
+
+        <div class="card-header border-success ">
+          <h3 class="h3">Reset password</h3>
+          <p class="text-start text-info">Please provide your email address;
+            an email will be sent to your email with the instructions to to reset your password.</p>
         </div>
 
-        <div class="form-container">
-          <div class="login-form">
-            <div class="mb-3">
-              <input v-model="email" :class="emailClass" placeholder="Email" type="email"
-                     @input="emailChange"/>
+        <div class="card-body">
+          <AlertBox/>
+          <div class="container text-start">
+
+            <div class="row">
+              <div class="col-6 col-sm-4 fw-bold text-uppercase">Email Address</div>
+              <div class="col-6 col-sm-8">
+                <input v-model="email" class="form-control" placeholder="emaill address" type="email"/>
+              </div>
             </div>
-            <div class="mb-3">
-              <button class="btn btn-info login-button">Reset</button>
-              <a class="btn btn-info login-button" @click="$router.go(-1)">Back</a>
-            </div>
+
           </div>
         </div>
 
+        <div class="card-footer bg-transparent border-success mb-2">
+          <button class="btn btn-success me-2 mt-2" @click="requestPasswordResetToken">
+            Request new password
+          </button>
+        </div>
+
       </div>
+    </div>
+    <div class="form-register footer mt-auto">
+      <div class="w-100 mt-2"></div>
+      <router-link class="footer-link text-info" to="/">Home</router-link>
+      |
+      <router-link class="footer-link text-info" to="/">Help</router-link>
     </div>
   </div>
 
 </template>
 
 <script>
-import '../../assets/login.css';
-import FormValidation from "@/util/FormValidation";
+import {mapActions} from "vuex";
+import AlertBox from "@/components/util/AlertBox.vue";
 
 export default {
   name: "ForgetPassword",
-  data() {
-    return {
-      formValidated: false,
-      email: '',
-      emailValid: false,
-    }
-
-  },
+  components: {AlertBox},
   computed: {
-    emailClass: function () {
-      return {
-        'form-control': true,
-        'is-valid': this.emailValid && this.formValidated,
-        'is-invalid': !this.emailValid && this.formValidated
+    email: {
+      get() {
+        return this.$store.state.passwordForgetForm.email
+      },
+      set(value) {
+        this.$store.commit('passwordForgetForm/UPDATE_EMAIL', value)
       }
     },
   },
   methods: {
-    emailChange() {
-      this.formValidated = true;
-      if (FormValidation.validateEmail(this.email)) {
-        this.emailValid = true;
-      } else {
-        this.emailValid = false;
-      }
-    },
+    ...mapActions(
+        {
+          requestPasswordResetToken: 'passwordForgetForm/requestPasswordResetToken',
+        }
+    )
   }
 }
 
 </script>
 
 <style scoped>
-.login-button {
-  min-width: 25%;
-  margin: 1rem;
-
-}
-
 
 </style>

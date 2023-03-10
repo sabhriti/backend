@@ -17,10 +17,17 @@ export default {
         async updatePassword({state, dispatch}) {
             if (state.newPassword === state.oldPassword) {
                 dispatch('showError', "Old password and new password must be different.", {root: true});
+                return false;
             }
 
             if (state.newPassword !== state.newPasswordRepeated) {
                 dispatch('showError', "The new passwords do not match.", {root: true});
+                return false;
+            }
+
+            if (state.newPassword.length <= 6) {
+                dispatch('showError', "The new passwords must be at-least 6 characters long.", {root: true});
+                return false;
             }
 
             try {
@@ -38,7 +45,7 @@ export default {
                 if (error.response.status === 500) {
                     dispatch('showError', "Something went wrong. Please try again.", {root: true});
                 } else {
-                    dispatch('showError', error.response.data, {root: true});
+                    dispatch('showError', error.response.data.message, {root: true});
                 }
             }
 
@@ -53,7 +60,7 @@ export default {
                 });
 
                 if (response.data) {
-                    commit('UPDATE_TOKEN', response.data);
+                    commit('UPDATE_TOKEN', token);
                 } else {
                     commit('UPDATE_TOKEN_INVALID', true);
                 }
