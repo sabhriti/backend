@@ -25,6 +25,16 @@ export default {
 
             commit('UPDATE_ALERT_CLASS', `alert alert-${state.alertType}`);
         },
+
+        showWarning: ({commit, state}, message) => {
+            commit('UPDATE_ALERT_MESSAGE', message);
+            commit('UPDATE_ALERT_TYPE', "warning");
+            commit('SHOW_ALERT');
+
+            commit('UPDATE_ALERT_CLASS', `alert alert-${state.alertType}`);
+        },
+
+
         hideAlert: ({commit, state}) => {
             commit('UPDATE_ALERT_CLASS', `alert alert-${state.alertType} d-none`);
             commit('HIDE_ALERT');

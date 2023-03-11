@@ -1,5 +1,6 @@
 import ApiConfig from "@/config/ApiConfig";
 import axios from "axios";
+import router from "@/routes";
 
 export default {
     namespaced: true,
@@ -25,13 +26,13 @@ export default {
                 return false;
             }
 
-            if (state.newPassword.length <= 6) {
+            if (state.newPassword.length < 6) {
                 dispatch('showError', "The new passwords must be at-least 6 characters long.", {root: true});
                 return false;
             }
 
             try {
-                const response = await axios({
+                await axios({
                     method: 'post',
                     url: `${ApiConfig.NEW_API_BASE_URL}/security/create-password`,
                     data: {
@@ -39,8 +40,7 @@ export default {
                         token: state.token
                     }
                 });
-
-                console.log(response);
+                await router.push({name: 'passwordResetSuccess'});
             } catch (error) {
                 if (error.response.status === 500) {
                     dispatch('showError', "Something went wrong. Please try again.", {root: true});
@@ -74,7 +74,7 @@ export default {
         }
     },
     mutations: {
-        UPDATE_TOKEN_INVALID: (state, value) => state.tokenInvalid= value,
+        UPDATE_TOKEN_INVALID: (state, value) => state.tokenInvalid = value,
         UPDATE_TOKEN: (state, value) => state.token = value,
         UPDATE_OLD_PASSWORD: (state, oldPassword) => state.oldPassword = oldPassword,
         UPDATE_NEW_PASSWORD: (state, newPassword) => state.newPassword = newPassword,

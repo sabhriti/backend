@@ -23,9 +23,9 @@ export default {
                 });
 
                 console.log(response);
-            }catch (error) {
+            } catch (error) {
                 console.log(error.response)
-                if(404 === error.response.status || 500 === error.response.status) {
+                if (404 === error.response.status || 500 === error.response.status) {
                     dispatch('showError', error.response.data.message, {root: true});
                     return false;
                 }

@@ -4,6 +4,13 @@
       <div class="card bg-transparent ">
         <div class="card-header border-success ">
           <h3 class="h3">Register</h3>
+          <p class="text-start text-info">
+            Please fill up the following form to create a new account.
+            Once you have submit a valid form you will be informed via email about hte next steps to start using this app.
+            <br>
+            <br>
+            <b class="text-primary">Note: All the fields in the form are compulsory.</b>
+          </p>
         </div>
         <div class="card-body">
           <AlertBox/>

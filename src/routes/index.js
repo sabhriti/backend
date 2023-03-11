@@ -2,7 +2,6 @@ import {createRouter, createWebHashHistory} from 'vue-router';
 import UserLoginPage from "@/components/security/LoginPage";
 import UserForgetPassword from "@/components/security/ForgetPassword";
 import UserRegistrationPage from "@/components/security/RegistrationPage";
-import UserRegistrationSuccess from "@/components/security/RegistrationSuccess";
 import DashboardHome from "@/components/home/DashboardHome";
 import UserComponent from "@/components/user/UserComponent";
 import SurveysComponent from "@/components/survey/SurveysComponent";
@@ -36,6 +35,8 @@ import SettingComponent from "@/components/setting/SettingComponent.vue";
 import UserForm from "@/components/user/UserForm.vue";
 import UserProfileForm from "@/components/setting/UserProfileForm.vue";
 import NewPasswordForm from "@/components/security/NewPasswordForm.vue";
+import RegistrationSuccess from "@/components/security/RegistrationSuccess.vue";
+import PasswordResetSuccess from "@/components/security/PasswordResetSuccess.vue";
 
 const routes = [
     {
@@ -253,9 +254,14 @@ const routes = [
                 component: UserRegistrationPage
             },
             {
+                path: 'password-reset-success',
+                name: 'passwordResetSuccess',
+                component: PasswordResetSuccess
+            },
+            {
                 path: 'registration-success',
                 name: 'userRegistrationSuccess',
-                component: UserRegistrationSuccess
+                component: RegistrationSuccess
             }
         ]
     }
