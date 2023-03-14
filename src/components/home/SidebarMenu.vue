@@ -2,52 +2,9 @@
   <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block sidebar bg-dark collapse show">
     <div class="position-sticky pt-3 mt-4">
       <ul class="nav flex-column">
-        <li class="nav-item">
-          <a aria-current="page" class="nav-link text-info active" href="#">
-            <span class="material-icons-outlined">home</span>Home</a>
-        </li>
-
-        <li class="nav-item">
-          <router-link class="nav-link text-info" to="/users">
-            <span class="material-icons-outlined">people_outline</span> User
-          </router-link>
-        </li>
-
-        <li class="nav-item">
-          <router-link class="nav-link text-info" to="/answer-type">
-            <span class="material-icons-outlined">rule</span>Answer
-          </router-link>
-        </li>
-
-        <li class="nav-item">
-          <router-link class="nav-link text-info" to="/question">
-            <span class="material-icons-outlined">quiz</span>Question
-          </router-link>
-        </li>
-
-        <li class="nav-item">
-          <router-link class="nav-link text-info" to="/surveys">
-            <span class="material-icons-outlined">poll</span>Survey
-          </router-link>
-        </li>
-        <li class="nav-item">
-          <router-link class="nav-link text-info" to="/feedbacks">
-            <span class="material-icons-outlined">reviews</span>Feedback
-          </router-link>
-        </li>
-        <li class="nav-item">
-          <router-link class="nav-link text-info" to="/factory">
-            <span class="material-icons-outlined">factory</span>Factory
-          </router-link>
-        </li>
-        <li class="nav-item">
-          <router-link class="nav-link text-info" to="/language">
-            <span class="material-icons-outlined">language</span>Language
-          </router-link>
-        </li>
-        <li class="nav-item">
-          <router-link class="nav-link text-info" to="/translation">
-            <span class="material-icons-outlined">translate</span>Translation
+        <li v-for="(route, index) in getRoutes()" :key="index" class="nav-item">
+          <router-link :to="route.to" class="nav-link text-info">
+            <span class="material-icons-outlined">{{ route.icon }}</span> {{ route.text }}
           </router-link>
         </li>
       </ul>
@@ -57,7 +14,85 @@
 
 <script>
 export default {
-  name: "SidebarMenu"
+  name: "SidebarMenu",
+  methods: {
+    getRoutes() {
+      const sessionData = JSON.parse(localStorage.getItem("session"));
+
+      const token = JSON.parse(atob(sessionData.token.split('.')[1]));
+
+      const rolesFromSession = token.ROLES;
+
+      return this.routes.filter(route => {
+        if (rolesFromSession.includes('ADMIN')) {
+          return true;
+        } else {
+          let canView = false;
+          rolesFromSession.forEach(sRole => {
+            if (route.requiredRole.includes(sRole)) {
+              canView = true;
+            }
+          });
+
+          return canView;
+        }
+      });
+    }
+  },
+  data() {
+    return {
+      routes: [
+        {
+          to: '/',
+          icon: 'home',
+          text: 'Home',
+          requiredRole: ['ADMIN', 'USER']
+        },
+        {
+          to: '/users',
+          icon: 'people_outline',
+          text: 'User',
+          requiredRole: ['ADMIN']
+        },
+        {
+          to: '/question',
+          icon: 'quiz',
+          text: 'Question',
+          requiredRole: ['ADMIN', 'USER']
+        },
+        {
+          to: '/surveys',
+          icon: 'poll',
+          text: 'Survey',
+          requiredRole: ['ADMIN', 'USER']
+        },
+        {
+          to: '/feedbacks',
+          icon: 'reviews',
+          text: 'Feedback',
+          requiredRole: ['ADMIN', 'USER']
+        },
+        {
+          to: '/factory',
+          icon: 'factory',
+          text: 'Factory',
+          requiredRole: ['ADMIN', 'USER']
+        },
+        {
+          to: '/language',
+          icon: 'language',
+          text: 'Language',
+          requiredRole: ['ADMIN']
+        },
+        {
+          to: '/translation',
+          icon: 'translate',
+          text: 'Translation',
+          requiredRole: ['ADMIN']
+        }
+      ]
+    }
+  }
 }
 </script>
 

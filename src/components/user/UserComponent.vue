@@ -1,5 +1,5 @@
 <template>
-  <component-header text="Surveys"/>
+  <ComponentHeader text="Users"/>
   <router-view></router-view>
 </template>
 
@@ -7,10 +7,9 @@
 import ComponentHeader from "@/components/ComponentHeader";
 
 export default {
-  name: "SurveysComponent",
+  name: "UserComponent",
   components: {
-    ComponentHeader,
-
+    ComponentHeader
   }
 }
 </script>

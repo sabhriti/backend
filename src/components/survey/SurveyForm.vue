@@ -140,13 +140,9 @@ export default {
     },
   },
   mounted() {
-    this.$store.dispatch('hideAlert');
     this.fetchSurveyById(this.$route.params.id);
     this.fetchFactories();
     this.fetchAllQuestions()
   }
 }
 </script>
-
-<style scoped>
-</style>

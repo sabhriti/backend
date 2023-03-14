@@ -8,7 +8,7 @@ export default {
         async fetchAllQuestions({commit, dispatch}) {
             const config = {
                 method: 'get',
-                url: `${ApiConfig.API_BASE_URL}/question`,
+                url: `${ApiConfig.NEW_API_BASE_URL}/questions`,
                 headers: {}
             };
 

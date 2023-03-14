@@ -51,7 +51,6 @@ export default {
     ...mapActions(['fetchLanguageById', 'saveLanguage']),
   },
   mounted() {
-    this.$store.dispatch('hideAlert');
     this.fetchLanguageById(this.$route.params.id);
   },
 }

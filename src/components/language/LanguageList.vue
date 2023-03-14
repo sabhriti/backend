@@ -69,7 +69,6 @@ export default {
     ...mapGetters(['allLanguages'])
   },
   mounted() {
-    this.$store.dispatch('hideAlert');
     this.fetchAllLanguages();
   }
 }

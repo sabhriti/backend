@@ -63,9 +63,6 @@ export default {
         this.$store.commit('translationKeyForm/UPDATE_IS_ACTIVE', value)
       }
     }
-  },
-  created() {
-    this.$store.dispatch('hideAlert');
   }
 }
 </script>

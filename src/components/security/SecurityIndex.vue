@@ -4,10 +4,6 @@
 
 <script>
 export default {
-  name: "UserIndex"
+  name: "SecurityIndex"
 }
 </script>
-
-<style scoped>
-
-</style>
