@@ -1,8 +1,10 @@
 <script setup>
 import ApplicationIndex from "@/components/ApplicationIndex";
+import FullPageSpinner from "@/components/util/FullPageSpinner.vue";
 </script>
 
 <template>
+  <FullPageSpinner />
   <ApplicationIndex />
 </template>
 

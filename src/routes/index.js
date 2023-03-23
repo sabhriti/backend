@@ -3,7 +3,7 @@ import LocalStorage from "@/util/local_storage";
 
 import UserLoginPage from "@/components/security/LoginPage";
 import UserForgetPassword from "@/components/security/ForgetPassword";
-import UserRegistrationPage from "@/components/security/RegistrationPage";
+import RegistrationForm from "@/components/security/RegistrationForm";
 import DashboardHome from "@/components/home/DashboardHome";
 import UserComponent from "@/components/user/UserComponent";
 import SurveysComponent from "@/components/survey/SurveysComponent";
@@ -252,8 +252,8 @@ const routes = [
             },
             {
                 path: 'register',
-                name: 'userRegistrationPage',
-                component: UserRegistrationPage
+                name: 'userRegistrationForm',
+                component: RegistrationForm
             },
             {
                 path: 'password-reset-success',

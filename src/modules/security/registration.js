@@ -42,6 +42,7 @@ export default {
                     {
                         name: state.name,
                         email: state.email,
+                        username: state.username
                     }
                 );
 

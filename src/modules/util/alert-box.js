@@ -11,7 +11,7 @@ export default {
             commit('UPDATE_ALERT_TYPE', "danger");
             commit('SHOW_ALERT');
 
-            if (!state.isHidden) {
+            if (!state.isVisible) {
                 commit('UPDATE_ALERT_CLASS', `alert alert-${state.alertType}`);
             } else {
                 commit('UPDATE_ALERT_CLASS', `alert alert-${state.alertType} d-none`);
@@ -48,7 +48,7 @@ export default {
         UPDATE_ALERT_MESSAGE: (state, message) => state.alertMessage = message,
         UPDATE_ALERT_TYPE: (state, type) => state.alertType = type,
         UPDATE_ALERT_CLASS: (state, alertClass) => state.alertClass = alertClass,
-        SHOW_ALERT: (state) => state.isHidden = false,
-        HIDE_ALERT: (state) => state.isHidden = true
+        SHOW_ALERT: (state) => state.isVisible = false,
+        HIDE_ALERT: (state) => state.isVisible = true
     }
 }

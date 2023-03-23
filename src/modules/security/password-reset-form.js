@@ -43,14 +43,18 @@ export default {
                 });
                 await router.push({name: 'passwordResetSuccess'});
             } catch (error) {
-                if (error.response.status === 500) {
-                    dispatch('showError', "Something went wrong. Please try again.", {root: true});
+                console.log(error);
+
+                if (error.response) {
+                    if (error.response.status === 500) {
+                        dispatch('showError', "Something went wrong. Please try again.", {root: true});
+                    } else {
+                        dispatch('showError', error.response.data.message, {root: true});
+                    }
                 } else {
-                    dispatch('showError', error.response.data.message, {root: true});
+                    dispatch('showError', "Something went wrong. Please try again.", {root: true});
                 }
             }
-
-            console.log(state);
         },
 
         async validateToken({dispatch, commit}, token) {

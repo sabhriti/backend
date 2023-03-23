@@ -1,16 +1,23 @@
 <template>
-  <div class="spinner">
-    <div class="rect1"></div>
-    <div class="rect2"></div>
-    <div class="rect3"></div>
-    <div class="rect4"></div>
-    <div class="rect5"></div>
+  <div class="backdrop" v-if="isVisible">
+    <div class="spinner">
+      <div class="rect1 me-1"></div>
+      <div class="rect2 me-1"></div>
+      <div class="rect3 me-1"></div>
+      <div class="rect4 me-1"></div>
+      <div class="rect5 me-1"></div>
+    </div>
   </div>
 </template>
 
 <script>
+import {mapGetters} from "vuex";
+
 export default {
-  name: "Spinner"
+  name: "FullPageSpinner",
+  computed: {
+    ...mapGetters({isVisible: 'fullPageSpinner/isVisible'})
+  }
 }
 </script>
 
@@ -27,7 +34,7 @@ export default {
 
 .spinner > div {
   z-index: 999;
-  background-color: black;
+  background-color: white;
   height: 100%;
   width: 6px;
   display: inline-block;
@@ -53,6 +60,14 @@ export default {
 .spinner .rect5 {
   -webkit-animation-delay: -0.8s;
   animation-delay: -0.8s;
+}
+.backdrop {
+  position:absolute;
+  top:0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 999;
+  background-color: #1B222D;
 }
 
 @-webkit-keyframes sk-stretchdelay {

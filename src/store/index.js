@@ -13,6 +13,7 @@ import answerTypeList from "@/modules/answer/answer-type-list";
 import userList from "@/modules/user/user-list";
 import userForm from "@/modules/user/user-form";
 import alertBox from "@/modules/util/alert-box";
+import fullPageSpinner from "@/modules/util/full-page-spinner";
 import surveyList from "@/modules/survey/survey-list";
 import surveyAnswerList from "@/modules/survey/survey-answer-list";
 import surveyForm from "@/modules/survey/survey-form";
@@ -44,6 +45,7 @@ export default createStore({
         userList,
         userForm,
         alertBox,
+        fullPageSpinner,
         languageForm,
         languageList,
         translationList,

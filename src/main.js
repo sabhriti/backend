@@ -11,6 +11,7 @@ import 'material-icons';
 const mixin = {
     mounted() {
         this.$store.dispatch('hideAlert');
+        this.$store.dispatch('fullPageSpinner/hideSpinner');
     }
 }
 

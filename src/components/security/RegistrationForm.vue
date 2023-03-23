@@ -55,7 +55,7 @@ import {mapActions} from "vuex";
 import AlertBox from "@/components/util/AlertBox";
 
 export default {
-  name: "RegistrationPage",
+  name: "RegistrationForm",
   components: {
     AlertBox
   },

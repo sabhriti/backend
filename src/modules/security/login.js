@@ -14,7 +14,7 @@ export default {
         rememberMe: false
     },
     actions: {
-        async loginAction({dispatch, state}, payload) {
+        async loginAction({dispatch, state}) {
 
             if ('' === state.username) {
                 dispatch('showError', "Please enter username.", {root: true});
@@ -41,6 +41,11 @@ export default {
             } else {
                 LocalStorage.remove("remember_me");
             }
+            const payload = {
+                username: state.username,
+                password: state.password
+            } ;
+
 
             const config = {
                 method: 'post',
