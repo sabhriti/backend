@@ -35,11 +35,13 @@
 </template>
 
 <script>
+import Local_storage from "@/util/local_storage";
+
 export default {
   name: "HeaderMenu",
   methods: {
     signOut: function () {
-      localStorage.removeItem("session");
+      Local_storage.remove("session");
       this.$router.push({name: 'userLoginPage'});
     }
   }

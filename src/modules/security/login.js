@@ -2,6 +2,9 @@ import ApiConfig from "@/config/ApiConfig";
 
 const axios = require('axios');
 import router from '../../routes';
+import LocalStorage from "@/util/local_storage";
+import CryptoJS from "crypto-js";
+import SecurityConfig from "@/config/SecurityConfig";
 
 export default {
     namespaced: true,
@@ -11,20 +14,34 @@ export default {
         rememberMe: false
     },
     actions: {
+        async loginAction({dispatch, state}, payload) {
 
-        handleUsernameChange: ({commit}, newUsername) => {
-            if (newUsername) {
-                commit('USERNAME', newUsername.currentTarget.value);
+            if ('' === state.username) {
+                dispatch('showError', "Please enter username.", {root: true});
+                return false;
             }
-        },
-
-        handlePasswordChange: ({commit}, newPassword) => {
-            if (newPassword) {
-                commit('PASSWORD', newPassword.currentTarget.value);
+            if ('' === state.password) {
+                dispatch('showError', "Please enter password.", {root: true});
+                return false;
             }
-        },
 
-        async loginAction({dispatch}, payload) {
+            const encryptedPassword = CryptoJS.AES.encrypt(
+                state.password,
+                SecurityConfig.PASSWORD_ENCRYPTION_SECRET
+            ).toString();
+
+            if (state.rememberMe === true) {
+                const rememberMe = {
+                    username: state.username,
+                    password: encryptedPassword
+                };
+
+                LocalStorage.remove("remember_me");
+                LocalStorage.setWithoutTtl("remember_me", rememberMe);
+            } else {
+                LocalStorage.remove("remember_me");
+            }
+
             const config = {
                 method: 'post',
                 url: `${ApiConfig.NEW_API_BASE_URL}/security/login`,
@@ -41,12 +58,14 @@ export default {
                     username: payload.username
                 };
 
-                localStorage.setItem("session", JSON.stringify(sessionData));
+                LocalStorage.set("session", sessionData, 900);
+
 
                 await router.push({name: 'home'});
             } catch (error) {
-
-                console.error(error.response.data);
+                if ('ERR_NETWORK' === error.code) {
+                    dispatch('showError', "Something went wrong. Please try again.", {root: true});
+                }
 
                 if (error.response.status === 500) {
                     dispatch('showError', "Something went wrong. Please try again.", {root: true});

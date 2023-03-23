@@ -5,7 +5,7 @@
 
         <div class="form-greetings py-3">
           <p class="message">
-            Your password has been successfully changed.
+            {{message}}
           </p>
           <router-link to="/security/login" class="btn btn-info login-button">Login</router-link>
         </div>
@@ -18,7 +18,10 @@
 <script>
 import '@/assets/login.css';
 export default {
-  name: "PasswordResetSuccess"
+  name: "PasswordResetMessage",
+  props: {
+    message: String
+  }
 }
 </script>
 

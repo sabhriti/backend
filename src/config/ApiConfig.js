@@ -1,4 +1,5 @@
 import axios from "axios";
+import LocalStorage from "@/util/local_storage";
 
 export default {
     // Use this when local
@@ -8,7 +9,7 @@ export default {
 
 // ad authentication headers to each http request.
 axios.interceptors.request.use(function (config) {
-    const session =   JSON.parse(localStorage.getItem('session'));
+    const session =   LocalStorage.get('session');
 
     if (session && session.token) {
         config.headers.Authorization = `Bearer ${session.token}`;

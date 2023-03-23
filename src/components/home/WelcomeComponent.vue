@@ -4,6 +4,8 @@
 
 <script>
 import ComponentHeader from "@/components/ComponentHeader";
+import LocalStorage from "@/util/local_storage";
+
 export default {
   name: "WelcomeComponent",
   components: { ComponentHeader},
@@ -14,7 +16,7 @@ export default {
   },
 
   created() {
-    const session = JSON.parse(localStorage.getItem("session"));
+    const session = LocalStorage.get("session");
     this.text = "Welcome " + session.username;
   }
 }

@@ -13,11 +13,13 @@
 </template>
 
 <script>
+import LocalStorage from "@/util/local_storage";
+
 export default {
   name: "SidebarMenu",
   methods: {
     getRoutes() {
-      const sessionData = JSON.parse(localStorage.getItem("session"));
+      const sessionData = LocalStorage.get("session");
 
       const token = JSON.parse(atob(sessionData.token.split('.')[1]));
 

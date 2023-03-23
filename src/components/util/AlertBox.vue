@@ -1,7 +1,9 @@
 <template>
-  <div :class="alertClass" role="alert">
-    {{ alertMessage }}
-    <button aria-label="Close" class="btn-close alert-close" type="button" @click="handleCloseClick"></button>
+  <div class="message-wrapper ms-2 me-2">
+    <div :class="alertClass" role="alert">
+      {{ alertMessage }}
+      <button aria-label="Close" class="btn-close alert-close" type="button" @click="handleCloseClick"></button>
+    </div>
   </div>
 </template>
 

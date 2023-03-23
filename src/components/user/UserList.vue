@@ -54,6 +54,7 @@
 <script>
 import {mapActions, mapGetters} from "vuex";
 import AlertBox from "@/components/util/AlertBox.vue";
+import LocalStorage from "@/util/local_storage";
 
 export default {
   name: "UserList",
@@ -66,7 +67,7 @@ export default {
         }
     ),
     isCurrentUser: function (user) {
-      return JSON.parse(localStorage.getItem('session')).username === user.username;
+      return LocalStorage.get('session').username === user.username;
     },
   },
   computed: {

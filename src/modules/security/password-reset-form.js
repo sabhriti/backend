@@ -32,6 +32,7 @@ export default {
             }
 
             try {
+                console.log('insstate', state.token);
                 await axios({
                     method: 'post',
                     url: `${ApiConfig.NEW_API_BASE_URL}/security/create-password`,

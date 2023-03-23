@@ -1,4 +1,6 @@
 import {createRouter, createWebHashHistory} from 'vue-router';
+import LocalStorage from "@/util/local_storage";
+
 import UserLoginPage from "@/components/security/LoginPage";
 import UserForgetPassword from "@/components/security/ForgetPassword";
 import UserRegistrationPage from "@/components/security/RegistrationPage";
@@ -36,7 +38,7 @@ import UserForm from "@/components/user/UserForm.vue";
 import UserProfileForm from "@/components/setting/UserProfileForm.vue";
 import NewPasswordForm from "@/components/security/NewPasswordForm.vue";
 import RegistrationSuccess from "@/components/security/RegistrationSuccess.vue";
-import PasswordResetSuccess from "@/components/security/PasswordResetSuccess.vue";
+import PasswordResetMessage from "@/components/security/PasswordResetMessage.vue";
 
 const routes = [
     {
@@ -256,7 +258,13 @@ const routes = [
             {
                 path: 'password-reset-success',
                 name: 'passwordResetSuccess',
-                component: PasswordResetSuccess
+                component: PasswordResetMessage,
+                props: {message: 'Your password has been successfully changed.'}
+            }, {
+                path: 'password-reset-requested',
+                name: 'passwordResetRequested',
+                component: PasswordResetMessage,
+                props: {message: 'Thank you very much. An email with next step has been sent to the provided address.'}
             },
             {
                 path: 'registration-success',
@@ -275,14 +283,14 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-    const sessionData = localStorage.getItem('session');
+    const sessionData = LocalStorage.get('session');
 
     if (to.meta.requiresAuth && !sessionData) {
         return next({name: 'userLoginPage'});
     }
 
     if (sessionData) {
-        const sessionParsed = JSON.parse(atob(sessionData.split('.')[1]));
+        const sessionParsed = JSON.parse(atob(sessionData.token.split('.')[1]));
 
         if (to.meta.requiredRoles.length <= 0) {
             return next();

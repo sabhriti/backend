@@ -2,7 +2,7 @@ import ApiConfig from "@/config/ApiConfig";
 import axios from "axios";
 import FormValidation from "@/util/FormValidation";
 import router from "@/routes";
-
+import LocalStorage from "@/util/local_storage";
 export default {
     namespaced: true,
     state: {
@@ -17,7 +17,7 @@ export default {
 
     actions: {
         async fetchProfileDetails({commit, dispatch}) {
-            const username = JSON.parse(localStorage.getItem("session")).username;
+            const username = LocalStorage.getItem("session").username;
 
             const config = {
                 method: 'get',

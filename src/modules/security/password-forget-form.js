@@ -1,6 +1,7 @@
 import FormValidation from "@/util/FormValidation";
 import axios from "axios";
 import ApiConfig from "@/config/ApiConfig";
+import router from "@/routes";
 
 export default {
     namespaced: true,
@@ -17,12 +18,12 @@ export default {
             }
 
             try {
-                const response = await axios({
+                await axios({
                     method: 'get',
                     url: `${ApiConfig.NEW_API_BASE_URL}/security/forget-password/email=${state.email}`
                 });
 
-                console.log(response);
+                await router.push({name: 'passwordResetRequested', params: {message: 'Guten tag'}});
             } catch (error) {
                 console.log(error.response)
                 if (404 === error.response.status || 500 === error.response.status) {

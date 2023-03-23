@@ -1,7 +1,7 @@
 <template>
   <div class="login-form-container">
     <div class="card bg-transparent border-0">
-      <form class="card-body">
+      <form class="card-body" @submit="loginAction">
         <div class="form-greetings py-3">
           <h3 class="h3">WELCOME</h3>
         </div>
@@ -10,27 +10,24 @@
         <div class="form-container">
           <div class="login-form">
             <div class="mb-3">
-              <input v-model="username" class="form-control" autocomplete="on" placeholder="Username"
-                     type="text"
-                     @input="handleUsernameChange"/>
+              <input v-model="username" autocomplete="on" class="form-control" placeholder="Username"
+                     type="text" required/>
             </div>
 
             <div class="mb-3">
               <input v-model="password" class="form-control" placeholder="Password"
-                     type="password"
-                     @input="handlePasswordChange"/>
+                     type="password" required/>
             </div>
 
             <div class="mb-3">
               <input id="rememberMe" v-model="rememberMe" aria-labelledby="rememberMeLabel" class="form-check-input m-1"
                      type="checkbox"
                      value="">
-              <label id="rememberMeLabel" class="form-check-label" for="rememberMe">
-                Remember me</label>
+              <label id="rememberMeLabel" class="form-check-label" for="rememberMe">Remember me</label>
             </div>
 
             <div class="mb-3">
-              <button class="btn btn-info login-button" @click="loginConfirm">Login</button>
+              <button class="btn btn-info login-button" type="submit">Login</button>
             </div>
           </div>
         </div>
@@ -52,16 +49,13 @@ import '@/assets/login.css';
 import {mapActions} from "vuex";
 import CryptoJS from 'crypto-js';
 import AlertBox from "@/components/util/AlertBox";
+import LocalStorage from "@/util/local_storage";
+import SecurityConfig from "@/config/SecurityConfig";
 
 export default {
   name: "LoginPage",
   components: {
     AlertBox
-  },
-  data() {
-    return {
-      formValidated: false,
-    }
   },
   computed: {
     username: {
@@ -92,46 +86,16 @@ export default {
   methods: {
     ...mapActions({
       loginAction: 'login/loginAction',
-      handleUsernameChange: 'login/handleUsernameChange',
-      handlePasswordChange: 'login/handlePasswordChange'
     }),
-
-    encryptPassword(password) {
-      return CryptoJS.AES.encrypt(password, 'test').toString();
-    },
-
-    loginConfirm() {
-      if (this.rememberMe === true) {
-        const rememberMe = {
-          username: this.username,
-          password: this.encryptPassword(this.password)
-        };
-        localStorage.removeItem("remember_me");
-        localStorage.setItem("remember_me", JSON.stringify(rememberMe));
-      } else {
-        localStorage.removeItem("remember_me");
-      }
-
-      this.loginAction(
-          {
-            username: this.username,
-            password: this.password
-          });
-    }
   },
-
   created() {
-    const itemFromLocalStorage = JSON.parse(localStorage.getItem('remember_me'));
+    const itemFromLocalStorage = LocalStorage.get('remember_me');
     if (itemFromLocalStorage) {
-      const bytes = CryptoJS.AES.decrypt(itemFromLocalStorage.password, 'test');
-      this.password = bytes.toString(CryptoJS.enc.Utf8)
-      this.username = itemFromLocalStorage.username;
-      this.rememberMe = true
+      const bytes = CryptoJS.AES.decrypt(itemFromLocalStorage.password, SecurityConfig.PASSWORD_ENCRYPTION_SECRET);
+      this.$store.commit('login/USERNAME', itemFromLocalStorage.username);
+      this.$store.commit('login/PASSWORD', bytes.toString(CryptoJS.enc.Utf8));
+      this.$store.commit('login/REMEMBER_ME', true);
     }
-  },
-  mounted() {
-    this.$store.dispatch("login/handleUsernameChange");
-    this.$store.dispatch("login/handlePasswordChange");
   }
 }
 </script>
