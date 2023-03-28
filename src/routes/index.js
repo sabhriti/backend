@@ -39,6 +39,7 @@ import UserProfileForm from "@/components/setting/UserProfileForm.vue";
 import NewPasswordForm from "@/components/security/NewPasswordForm.vue";
 import RegistrationSuccess from "@/components/security/RegistrationSuccess.vue";
 import PasswordResetMessage from "@/components/security/PasswordResetMessage.vue";
+import ErrorPage from "@/components/util/ErrorPage.vue";
 
 const routes = [
     {
@@ -222,9 +223,19 @@ const routes = [
             },
             {
                 path: "/:pathMatch(.*)*",
+                name: "pageNotFound",
                 component: PageNotFound
             }
         ]
+    },
+    {
+        path: "/error",
+        name: "ErrorPage",
+        meta: {
+            requiresAuth: false,
+            requiredRoles: []
+        },
+        component: ErrorPage
     },
     {
         path: '/security/',

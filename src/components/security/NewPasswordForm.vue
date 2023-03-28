@@ -4,18 +4,18 @@
       <div class="col-lg-5 mx-auto">
 
         <div v-if="tokenInvalid" class="card bg-transparent">
-          <div class="card-body bg-danger rounded-2">
-            <h4 class="h4 text-white">
-              This link is either very old or has already been used.
-              Please re-check if you correctly copied the link or contact your system administrators.
-            </h4>
+          <div class="card-header border-success">
+            <img :src="require('@/assets/oops.png')" alt="oops" class="w-25 bg-transparent mb-2"/>
+            <p class="h2 text-danger">This link has expired.</p>
+            It could be that this link is very old or has already been used once. <br>
+            Please make sure that you copied the link correctly or contact your system administrators.
           </div>
         </div>
 
         <div v-else class="card bg-transparent">
           <div class="card-header border-success ">
             <h3 class="h3">Change Password</h3>
-            <p class="text-start text-info">
+            <p class="text-start text-info mb-2">
               Please use the password sent to you in the email along with this link as old password.
               The new password must be at-least 6 characters long.
             </p>
@@ -27,20 +27,22 @@
 
                 <div class="col-6 col-sm-4 fw-bold text-uppercase">Old Password:</div>
                 <div class="col-6 col-sm-8">
-                  <input v-model="oldPassword" class="form-control " placeholder="old password" type="password"/>
+                  <input v-model="oldPassword" class="form-control " placeholder="old password" required
+                         type="password"/>
                 </div>
                 <div class="w-100 mt-4"></div>
 
                 <div class="col-6 col-sm-4 fw-bold text-uppercase">New Password:</div>
                 <div class="col-6 col-sm-8">
-                  <input v-model="newPassword" class="form-control" placeholder="new password" type="password"/>
+                  <input v-model="newPassword" class="form-control" placeholder="new password" required
+                         type="password"/>
                 </div>
                 <div class="w-100 mt-4"></div>
 
                 <div class="col-6 col-sm-4 fw-bold text-uppercase">Repeat New Password:</div>
                 <div class="col-6 col-sm-8">
                   <input v-model="newPasswordRepeated" class="form-control" placeholder="repeat new password"
-                         type="password"/>
+                         required type="password"/>
                 </div>
               </div>
             </div>

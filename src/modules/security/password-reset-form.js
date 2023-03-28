@@ -32,7 +32,6 @@ export default {
             }
 
             try {
-                console.log('insstate', state.token);
                 await axios({
                     method: 'post',
                     url: `${ApiConfig.NEW_API_BASE_URL}/security/create-password`,
@@ -44,20 +43,10 @@ export default {
                 await router.push({name: 'passwordResetSuccess'});
             } catch (error) {
                 console.log(error);
-
-                if (error.response) {
-                    if (error.response.status === 500) {
-                        dispatch('showError', "Something went wrong. Please try again.", {root: true});
-                    } else {
-                        dispatch('showError', error.response.data.message, {root: true});
-                    }
-                } else {
-                    dispatch('showError', "Something went wrong. Please try again.", {root: true});
-                }
             }
         },
 
-        async validateToken({dispatch, commit}, token) {
+        async validateToken({commit}, token) {
             try {
                 const response = await axios({
                     method: 'get',
@@ -70,11 +59,7 @@ export default {
                     commit('UPDATE_TOKEN_INVALID', true);
                 }
             } catch (error) {
-                if (error.response.status === 500) {
-                    dispatch('showError', "Something went wrong. Please try again.", {root: true});
-                } else {
-                    dispatch('showError', error.response.data, {root: true});
-                }
+                console.log(error);
             }
         }
     },

@@ -22,7 +22,7 @@ export default {
 
             if ('' === state.name) {
                 dispatch('showError', "Name of the user cannot be empty.", {root: true});
-                commit("IS_FORM_VALID");
+                commit("IS_FORM_VALID", false);
             } else if (!ValidateEmail.validateEmail(state.email)) {
                 dispatch('showError', "Please enter a valid email address. e.g. email@example.com", {root: true});
                 commit("IS_FORM_VALID", false);
@@ -38,37 +38,23 @@ export default {
             }
 
             if (state.isFormValid) {
-                const data = JSON.stringify(
-                    {
-                        name: state.name,
-                        email: state.email,
-                        username: state.username
-                    }
-                );
-
-                const config = {
-                    method: 'post',
-                    url: `${ApiConfig.NEW_API_BASE_URL}/security/signup`,
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    data: data
-                };
                 try {
-                    const response = await axios(config);
-
-                    if (200 === response.status) {
-                        await router.push('registration-success');
-                    } else {
-                        dispatch('showWarning', "Looks like not everything went well. You might have to try again in case everything isn't in order.", {root: true});
-                    }
+                    await axios({
+                        method: 'post',
+                        url: `${ApiConfig.NEW_API_BASE_URL}/security/signup`,
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        data: {
+                            name: state.name,
+                            email: state.email,
+                            username: state.username
+                        }
+                    });
+                    await router.push('registration-success');
 
                 } catch (error) {
-                    if (error.response.status === 500) {
-                        dispatch('showError', "Failed registering the user. Please try again.", {root: true});
-                    }
-
-                    dispatch('showError', error.response.data.message, {root: true});
+                    console.log(error)
                 }
             }
         }
