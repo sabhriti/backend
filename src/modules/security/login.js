@@ -1,6 +1,6 @@
 import ApiConfig from "@/config/ApiConfig";
 
-const axios = require('axios');
+import axios from "axios";
 import router from '../../routes';
 import LocalStorage from "@/util/local_storage";
 import CryptoJS from "crypto-js";
@@ -68,15 +68,7 @@ export default {
 
                 await router.push({name: 'home'});
             } catch (error) {
-                if ('ERR_NETWORK' === error.code) {
-                    dispatch('showError', "Something went wrong. Please try again.", {root: true});
-                }
-
-                if (error.response.status === 500) {
-                    dispatch('showError', "Something went wrong. Please try again.", {root: true});
-                } else {
-                    dispatch('showError', error.response.data, {root: true});
-                }
+                console.log(error);
             }
         }
     },

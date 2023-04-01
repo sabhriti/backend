@@ -5,7 +5,6 @@ export default {
     },
 
     mutations: {
-        TOGGLE_VISIBILITY: (state) => state.isVisible = !state.isVisible,
         HIDE: (state) => state.isVisible = false,
         SHOW: (state) => state.isVisible = true
     },
@@ -15,9 +14,6 @@ export default {
     },
 
     actions: {
-        toggleSpinner({commit}) {
-            commit('TOGGLE_VISIBILITY');
-        },
         hideSpinner({commit}) {
             commit('HIDE');
         },

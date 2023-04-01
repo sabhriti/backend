@@ -1,4 +1,4 @@
-const axios = require('axios');
+import axios from "axios";
 import router from '../../routes';
 import ApiConfig from "@/config/ApiConfig";
 import ValidateEmail from '@/util/FormValidation';

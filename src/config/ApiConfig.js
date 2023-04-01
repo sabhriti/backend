@@ -6,19 +6,24 @@ import router from "@/routes";
 export default {
     // Use this when local
     API_BASE_URL: "http://localhost:4000/api",
-    NEW_API_BASE_URL: "http://localhost:9090s"
+    NEW_API_BASE_URL: "http://localhost:9090"
 }
 
 // add authentication headers to each http request.
-axios.interceptors.request.use((config) => {
+axios.interceptors.request.use((request) => {
+
     store.dispatch('fullPageSpinner/showSpinner');
 
     const session = LocalStorage.get('session');
     if (session && session.token) {
-        config.headers.Authorization = `Bearer ${session.token}`;
+        request.headers.Authorization = `Bearer ${session.token}`;
     }
 
-    return config;
+    return request;
+}, async (error) => {
+    await store.dispatch('fullPageSpinner/hideSpinner');
+
+    return Promise.reject(error);
 });
 
 /**
@@ -26,18 +31,18 @@ axios.interceptors.request.use((config) => {
  * Shows the error alert in case of error.
  */
 axios.interceptors.response.use(
-    (response) => {
-        store.dispatch('fullPageSpinner/hideSpinner');
+    async (response) => {
+        await store.dispatch('fullPageSpinner/hideSpinner');
 
         return response;
     },
     async (error) => {
 
-        if (12 === error.code) {
+        if (12 === error.code || "ERR_NETWORK" === error.code) {
             await router.push({path: '/error'});
         }
 
-        console.log('error', error.code);
+        console.log('error code: ', error.code);
 
 
         await store.dispatch('displayHttpResponseErrorMessage', error);
