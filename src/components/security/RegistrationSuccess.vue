@@ -7,7 +7,7 @@
           <h3 class="h3">Thank you very much.</h3>
           <p class="message">
             Your request has been successfully completed. We have received your application.
-            We will inform you at the email address provided as soon as the user is activated.
+            You will be sent an email with the next steps that you can use to proceed with the application.
           </p>
           <router-link to="/security/login" class="btn btn-info login-button">Login</router-link>
         </div>

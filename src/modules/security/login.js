@@ -59,12 +59,11 @@ export default {
                 const response = await axios(config);
 
                 const sessionData = {
-                    token: response.data,
+                    token: response.data.token,
                     username: payload.username
                 };
 
                 LocalStorage.set("session", sessionData, 900);
-
 
                 await router.push({name: 'home'});
             } catch (error) {

@@ -83,22 +83,6 @@ export default {
       set(value) {
         this.$store.commit('registration/USERNAME', value);
       }
-    },
-    password: {
-      get() {
-        return this.$store.state.login.password;
-      },
-      set(value) {
-        this.$store.commit('registration/PASSWORD', value);
-      }
-    },
-    passwordRepeat: {
-      get() {
-        return this.$store.state.login.passwordRepeat;
-      },
-      set(value) {
-        this.$store.commit('registration/PASSWORD_REPEAT', value);
-      }
     }
   },
   methods: {

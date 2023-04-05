@@ -7,8 +7,8 @@ export default {
     namespaced: true,
     state: {
         name: '',
-        password: '',
         email: '',
+        username: '',
         isFormValid: false
     },
     mutations: {

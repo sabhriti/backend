@@ -36,6 +36,7 @@ export default {
                     method: 'post',
                     url: `${ApiConfig.NEW_API_BASE_URL}/security/create-password`,
                     data: {
+                        oldPassword: state.oldPassword,
                         password: state.newPassword,
                         token: state.token
                     }

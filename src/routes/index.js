@@ -301,25 +301,29 @@ router.beforeEach((to, from, next) => {
     }
 
     if (sessionData) {
-        const sessionParsed = JSON.parse(atob(sessionData.token.split('.')[1]));
-
-        if (to.meta.requiredRoles.length <= 0) {
-            return next();
-        } else {
-            let canSee = false;
-
-            sessionParsed.ROLES.forEach(role => {
-                if (to.meta.requiredRoles.includes(role)) {
-                    canSee = true
-                }
-            });
-
-            if (canSee) {
+        if (sessionData.token) {
+            const sessionParsed = JSON.parse(atob(sessionData.token.split('.')[1]));
+            if (to.meta.requiredRoles.length <= 0) {
                 return next();
             } else {
-                console.log("Unauthorized");
-                return next({name: 'home'});
+                let canSee = false;
+
+                sessionParsed.ROLES.forEach(role => {
+                    if (to.meta.requiredRoles.includes(role)) {
+                        canSee = true
+                    }
+                });
+
+                if (canSee) {
+                    return next();
+                } else {
+                    LocalStorage.remove('session');
+                    return next({name: 'home'});
+                }
             }
+        } else {
+            LocalStorage.remove('session');
+            return next({name: 'home'});
         }
     }
 
