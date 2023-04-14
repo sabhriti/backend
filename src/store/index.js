@@ -5,6 +5,7 @@ import registration from "@/modules/security/registration";
 import passwordResetForm from "@/modules/security/password-reset-form";
 import passwordForgetForm from "@/modules/security/password-forget-form";
 import userProfile from "@/modules/setting/user-profile";
+import changePassword from "@/modules/setting/change-password";
 import feedbackList from "@/modules/feedback/feedback-list";
 import questionList from "@/modules/question/question-list";
 import questionForm from "@/modules/question/question-form";
@@ -32,6 +33,7 @@ export default createStore({
         passwordResetForm,
         passwordForgetForm,
         userProfile,
+        changePassword,
         feedbackList,
         questionList,
         questionForm,

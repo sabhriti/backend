@@ -20,7 +20,7 @@
 
               <div class="col-6 col-sm-3 fw-bold text-uppercase">password:</div>
               <div class="col-6 col-sm-9 ">
-                <a class="btn btn-sm btn-outline-danger" href="#">change</a>
+                <router-link to="change-password" class="btn btn-sm btn-outline-danger" href="#">change</router-link>
               </div>
 
               <!-- Force next columns to break to new line -->

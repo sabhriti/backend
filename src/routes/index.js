@@ -1,10 +1,8 @@
 import {createRouter, createWebHashHistory} from 'vue-router';
 import LocalStorage from "@/util/local_storage";
 
-import DashboardHome from "@/components/home/DashboardHome";
 import AdminIndex from "@/components/admin/AdminIndex";
 import PageNotFound from "@/components/util/PageNotFound.vue";
-import ErrorPage from "@/components/util/ErrorPage.vue";
 import survey from "@/routes/survey";
 import question from "@/routes/question";
 import answerType from "@/routes/answerType";
@@ -15,19 +13,13 @@ import security from "@/routes/security";
 import factory from "@/routes/factory";
 import user from "@/routes/user";
 import feedback from "@/routes/feedback";
+import error from "@/routes/error";
+import home from "@/routes/home";
 
 const routes = [
-    {
-        path: '/',
-        name: 'home',
-        component: DashboardHome,
-        meta: {
-            requiresAuth: true,
-            requiredRoles: ['ADMIN', 'USER']
-        },
-
-    },
+    home,
     security,
+    error,
     {
         path: '/admin',
         component: AdminIndex,
@@ -53,15 +45,6 @@ const routes = [
                 component: PageNotFound
             }
         ]
-    },
-    {
-        path: "/error",
-        name: "ErrorPage",
-        meta: {
-            requiresAuth: false,
-            requiredRoles: []
-        },
-        component: ErrorPage
     }
 ];
 
