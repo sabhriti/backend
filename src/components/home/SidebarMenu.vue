@@ -21,24 +21,26 @@ export default {
     getRoutes() {
       const sessionData = LocalStorage.get("session");
 
-      const token = JSON.parse(atob(sessionData.token.split('.')[1]));
+      if(sessionData) {
+          const token = JSON.parse(atob(sessionData.token.split('.')[1]));
 
-      const rolesFromSession = token.ROLES;
+          const rolesFromSession = token.ROLES;
 
-      return this.routes.filter(route => {
-        if (rolesFromSession.includes('ADMIN')) {
-          return true;
-        } else {
-          let canView = false;
-          rolesFromSession.forEach(sRole => {
-            if (route.requiredRole.includes(sRole)) {
-              canView = true;
-            }
+          return this.routes.filter(route => {
+              if (rolesFromSession.includes('ADMIN')) {
+                  return true;
+              } else {
+                  let canView = false;
+                  rolesFromSession.forEach(sRole => {
+                      if (route.requiredRole.includes(sRole)) {
+                          canView = true;
+                      }
+                  });
+
+                  return canView;
+              }
           });
-
-          return canView;
-        }
-      });
+      }
     }
   },
   data() {

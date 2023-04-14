@@ -17,7 +17,7 @@ export default {
 
     actions: {
         async fetchProfileDetails({commit, dispatch}) {
-            const username = LocalStorage.getItem("session").username;
+            const username = LocalStorage.get("session").username;
 
             const config = {
                 method: 'get',

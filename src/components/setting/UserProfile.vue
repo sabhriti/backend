@@ -13,13 +13,13 @@
             <div class="row">
 
               <div class="col-6 col-sm-3 fw-bold text-uppercase">username:</div>
-              <div class="col-6 col-sm-3 ">{{ profileDetails.username }}</div>
+              <div class="col-6 col-sm-9 ">{{ profileDetails.username }}</div>
 
               <!-- Force next columns to break to new line -->
               <div class="w-100 mt-4"></div>
 
               <div class="col-6 col-sm-3 fw-bold text-uppercase">password:</div>
-              <div class="col-6 col-sm-3 ">
+              <div class="col-6 col-sm-9 ">
                 <a class="btn btn-sm btn-outline-danger" href="#">change</a>
               </div>
 
@@ -27,22 +27,22 @@
               <div class="w-100 mt-4"></div>
 
               <div class="col-6 col-sm-3 fw-bold text-uppercase">email:</div>
-              <div class="col-6 col-sm-3">{{ profileDetails.email }}</div>
+              <div class="col-6 col-sm-9">{{ profileDetails.email }}</div>
 
               <div class="w-100 mt-4"></div>
 
               <div class="col-6 col-sm-3 fw-bold text-uppercase">phone:</div>
-              <div class="col-6 col-sm-3">{{ profileDetails.phone }}</div>
+              <div class="col-6 col-sm-9">{{ profileDetails.phone }}</div>
 
               <div class="w-100 mt-4"></div>
 
               <div class="col-6 col-sm-3 fw-bold text-uppercase">roles:</div>
-              <div class="col-6 col-sm-3">{{ profileDetails.roles.join(", ") }}</div>
+              <div class="col-6 col-sm-9">{{ profileDetails.roles.join(", ") }}</div>
 
               <div class="w-100 mt-4"></div>
 
               <div class="col-6 col-sm-3 fw-bold text-uppercase">status:</div>
-              <div class="col-6 col-sm-3">{{ profileDetails.status }}</div>
+              <div class="col-6 col-sm-9">{{ profileDetails.status }}</div>
 
               <div class="w-100 mt-4"></div>
 
