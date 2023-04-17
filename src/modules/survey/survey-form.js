@@ -6,11 +6,11 @@ const axios = require('axios');
 export default {
     namespaced: true,
     state: {
-        factoryList: [],
+        unitList: [],
         survey: {
             surveyId: '',
             surveyName: '',
-            factoryId: '',
+            businessUnitId: '',
             questions: [{}],
             questionIdList: []
         }
@@ -44,7 +44,7 @@ export default {
                     if (response.data.data) {
                         commit('UPDATE_SURVEY_ID_IN_SURVEY', response.data.data._id);
                         commit('UPDATE_SURVEY_NAME_IN_SURVEY', response.data.data.surveyName);
-                        commit('UPDATE_FACTORY_ID_IN_SURVEY', response.data.data.factoryId);
+                        commit('UPDATE_BUSINESS_UNIT_ID_IN_SURVEY', response.data.data.businessUnitId);
                         commit('UPDATE_QUESTION_ID_IN_SURVEY', response.data.data.questions);
                     }
                 } catch (error) {
@@ -54,22 +54,22 @@ export default {
             } else {
                 commit('UPDATE_SURVEY_ID_IN_SURVEY', null);
                 commit('UPDATE_SURVEY_NAME_IN_SURVEY', null);
-                commit('UPDATE_FACTORY_ID_IN_SURVEY', null);
+                commit('UPDATE_BUSINESS_UNIT_ID_IN_SURVEY', null);
                 commit('UPDATE_QUESTION_ID_IN_SURVEY', []);
             }
         },
         async fetchFactories({commit, dispatch}) {
             const config = {
                 method: 'get',
-                url: `${ApiConfig.API_BASE_URL}/factory`,
+                url: `${ApiConfig.API_BASE_URL}/business-units`,
                 headers: {}
             };
 
             try {
                 const response = await axios(config);
-                commit('UPDATE_ALL_FACTORY_CODE', response.data.data);
+                commit('UPDATE_ALL_BUSINESS_UNIT_CODE', response.data.data);
             } catch (error) {
-                dispatch('showError', " Failed loading factories. Please try again.", {root: true});
+                dispatch('showError', " Failed loading business units. Please try again.", {root: true});
             }
         },
         async fetchAllQuestions({commit, dispatch}) {
@@ -90,7 +90,7 @@ export default {
             const surveyToSave = {
                 id: state.survey.surveyId,
                 surveyName: state.survey.surveyName,
-                factoryId: state.survey.factoryId,
+                businessUnitId: state.survey.businessUnitId,
                 questions: state.survey.questions.filter(question => question.isSelected).map(question => question.questionId)
             };
 
@@ -114,12 +114,12 @@ export default {
         }
     },
     getters: {
-        factoryList: (state) => state.factoryList,
+        businessUnitList: (state) => state.businessUnitList,
         questionList: (state) => state.survey.questions
     },
     mutations: {
-        UPDATE_ALL_FACTORY_CODE: (state, factoryList) => {
-            state.factoryList = factoryList
+        UPDATE_ALL_BUSINESS_UNIT_LIST_CODE: (state, unitList) => {
+            state.unitList = unitList
         },
         UPDATE_QUESTIONS_LIST: (state, questionList) => {
             state.survey.questions = questionList.map((question) => {
@@ -142,7 +142,7 @@ export default {
             });
         },
         UPDATE_SURVEY_ID_IN_SURVEY: (state, surveyId) => state.survey.surveyId = surveyId,
-        UPDATE_FACTORY_ID_IN_SURVEY: (state, factoryId) => state.survey.factoryId = factoryId,
+        UPDATE_BUSINESS_UNIT_ID_IN_SURVEY: (state, businessUnitId) => state.survey.businessUnitId = businessUnitId,
         UPDATE_SURVEY_NAME_IN_SURVEY: (state, surveyName) => state.survey.surveyName = surveyName,
         UPDATE_QUESTION_ID_IN_SURVEY: (state, questionIdList) => state.survey.questionIdList = questionIdList,
         REMOVE_QUESTION_FROM_SURVEY: (state, questionId) => {

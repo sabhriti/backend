@@ -53,7 +53,7 @@ export default {
 
                 await axios(config);
 
-                await router.push("/factory");
+                await router.push("/business-unit");
 
                 dispatch('showInfo', "New question successfully added", {root: true});
             } catch (error) {

@@ -18,8 +18,8 @@ import fullPageSpinner from "@/modules/util/full-page-spinner";
 import surveyList from "@/modules/survey/survey-list";
 import surveyAnswerList from "@/modules/survey/survey-answer-list";
 import surveyForm from "@/modules/survey/survey-form";
-import factoryList from "@/modules/factory/factory-list";
-import factoryForm from "@/modules/factory/factory-form";
+import businessUnitList from "@/modules/business-unit/business-unit-list";
+import businessUnitForm from "@/modules/business-unit/business-unit-form";
 import languageForm from "@/modules/language/language-form";
 import languageList from "@/modules/language/language-list";
 import translationList from "@/modules/translation/translation-list";
@@ -42,8 +42,8 @@ export default createStore({
         surveyList,
         surveyAnswerList,
         surveyForm,
-        factoryList,
-        factoryForm,
+        businessUnitList,
+        businessUnitForm,
         userList,
         userForm,
         alertBox,

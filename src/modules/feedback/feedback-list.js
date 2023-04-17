@@ -16,7 +16,7 @@ export default {
                 const feedbackList = response.data.data;
 
                 feedbackList.map(feedback => {
-                    commit('ADD_FACTORY_TO_LIST', feedback.factory)
+                    commit('ADD_FACTORY_TO_LIST', feedback.businessUnit)
                 });
 
                 commit('UPDATE_ALL_FEEDBACKS', feedbackList);
@@ -58,7 +58,7 @@ export default {
                 url: `${ApiConfig.API_BASE_URL}/feedback/filtered`,
                 headers: {},
                 data: {
-                    factoryId: state.selectedFactory
+                    businessUnitId: state.selectedBusinessUnit
                 }
             };
 
@@ -78,26 +78,26 @@ export default {
     },
     state: {
         feedbackList: [],
-        factoryList: [],
-        selectedFactory: ''
+        businessUnitList: [],
+        selectedBusinessUnit: ''
     },
 
     getters: {
         allFeedbacks: (state) => state.feedbackList,
-        factoryList: (state) => {
+        businessUnitList: (state) => {
             console.log(state);
-            return state.factoryList
+            return state.businessUnitList
         }
     },
 
     mutations: {
         UPDATE_ALL_FEEDBACKS: (state, feedbackList) => state.feedbackList = feedbackList,
-        ADD_FACTORY_TO_LIST: (state, factory) => {
-            const existingFactory = state.factoryList.find(storedFactory => storedFactory._id === factory._id);
-            if (!existingFactory) {
-                state.factoryList.push(factory)
+        ADD_FACTORY_TO_LIST: (state, businessUnit) => {
+            const existingBusinessUnit = state.businessUnitList.find(storedFactory => storedFactory._id === businessUnit._id);
+            if (!existingBusinessUnit) {
+                state.businessUnitList.push(businessUnit)
             }
         },
-        UPDATE_SELECTED_FACTORY: (state, value) => state.selectedFactory = value
+        UPDATE_SELECTED_BUSINESS_UNIT: (state, value) => state.selectedBusinessUnit = value
     }
 }

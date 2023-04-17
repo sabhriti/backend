@@ -16,16 +16,16 @@
       </td>
     </tr>
     <tr>
-      <th scope="col">Factory:</th>
+      <th scope="col">Business Unit:</th>
       <td>
         <hr/>
         <div class="container text-start">
           <div class="row">
             <div class="col mb-2">
-              <select id="factoryId" v-model="factoryId" class="form-select" required>
-                <option>Select a Factory</option>
-                <option v-for="factory in factoryList" :key="factory._id" :value="factory._id">
-                  {{ factory.name }}
+              <select id="businessUnitId" v-model="businessUnitId" class="form-select" required>
+                <option>Select a Business Unit</option>
+                <option v-for="businessUnit in businessUnitList" :key="businessUnit._id" :value="businessUnit._id">
+                  {{ businessUnit.name }}
                 </option>
               </select>
             </div>
@@ -118,16 +118,16 @@ export default {
   },
   computed: {
     ...mapGetters({
-          factoryList: "surveyForm/factoryList",
+          businessUnitList: "surveyForm/businessUnitList",
           questionList: "surveyForm/questionList"
         }
     ),
-    factoryId: {
+    businessUnitId: {
       get() {
-        return this.$store.state.surveyForm.survey.factoryId
+        return this.$store.state.surveyForm.survey.businessUnitId
       },
       set(value) {
-        this.$store.commit('surveyForm/UPDATE_FACTORY_ID_IN_SURVEY', value)
+        this.$store.commit('surveyForm/UPDATE_BUSINESS_UNIT_ID_IN_SURVEY', value)
       }
     },
     surveyName: {

@@ -77,9 +77,9 @@ export default {
           requiredRole: ['ADMIN', 'USER']
         },
         {
-          to: '/factory',
+          to: '/business-unit',
           icon: 'factory',
-          text: 'Factory',
+          text: 'Business Unit',
           requiredRole: ['ADMIN', 'USER']
         },
         {

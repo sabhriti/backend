@@ -1,5 +1,5 @@
 <template>
-  <ComponentHeader text="Factories"/>
+  <ComponentHeader text="Business Unit"/>
   <router-view></router-view>
 </template>
 
@@ -7,7 +7,7 @@
 import ComponentHeader from "@/components/ComponentHeader";
 
 export default {
-  name: "FactoryComponent",
+  name: "BusinessUnitComponent",
   components: {
     ComponentHeader
   }

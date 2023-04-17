@@ -10,7 +10,7 @@ import setting from "@/routes/setting";
 import translation from "@/routes/translation";
 import language from "@/routes/language";
 import security from "@/routes/security";
-import factory from "@/routes/factory";
+import businessUnit from "@/routes/business-unit";
 import user from "@/routes/user";
 import feedback from "@/routes/feedback";
 import error from "@/routes/error";
@@ -34,8 +34,7 @@ const routes = [
             answerType,
             feedback,
             user,
-            factory,
-
+            businessUnit,
             language,
             translation,
             setting,

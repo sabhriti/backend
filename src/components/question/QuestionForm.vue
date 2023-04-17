@@ -2,13 +2,13 @@
   <AlertBox/>
 
   <div class="mb-3 row">
-    <label class="col-sm-2 col-form-label d-flex justify-content-start" for="factoryName">Number</label>
+    <label class="col-sm-2 col-form-label d-flex justify-content-start" for="number">Number</label>
     <input v-model="number" class="form-control-color" name="number" placeholder="Question Number"
            type="text">
   </div>
 
   <div class="mb-3 row">
-    <label class="col-sm-2 col-form-label d-flex justify-content-start" for="factoryCode">Type</label>
+    <label class="col-sm-2 col-form-label d-flex justify-content-start" for="type">Type</label>
     <input v-model="type" class="form-control-color" name="type" placeholder="Question Type"
            type="text">
   </div>

@@ -5,8 +5,9 @@ const axios = require('axios');
 export default {
     state: {
         surveyList: [],
-        surveyedFactories: [],
-        filteredFactoryCode: ''
+        surveyedBusinessUnits: [],
+        filteredBusinessUnitCode: '',
+        filteredBusinessUnitId: ''
 
     },
     actions: {
@@ -20,7 +21,7 @@ export default {
             try {
                 const response = await axios(config);
                 commit('UPDATE_ALL_SURVEYS', response.data.data);
-                commit('UPDATE_SURVEYED_FACTORIES', response.data.data.map(survey => survey.factory));
+                commit('UPDATE_SURVEYED_BUSINESS_UNITS', response.data.data.map(survey => survey.businessUnit));
             } catch (error) {
                 dispatch('showError', " Failed deleting the User.", {root: true});
             }
@@ -32,7 +33,7 @@ export default {
                 url: `${ApiConfig.API_BASE_URL}/surveys/answers/filtered`,
                 headers: {},
                 data: {
-                    factoryId: state.filteredFactoryId
+                    businessUnitId: state.filteredBusinessUnitId
                 }
             };
 
@@ -50,7 +51,7 @@ export default {
         },
 
         async downloadFilteredSurveyAnswers({state}) {
-            const filteredFactoryId = state.filteredFactoryId;
+            const filteredFactoryId = state.filteredBusinessUnitId;
 
             if (filteredFactoryId) {
                 window.location.href = `${ApiConfig.API_BASE_URL}/surveys/download/answers/filtered/${filteredFactoryId}`
@@ -61,11 +62,11 @@ export default {
     },
     mutations: {
         UPDATE_ALL_SURVEYS: (state, surveyList) => state.surveyList = surveyList,
-        UPDATE_FILTERED_FACTORY_ID: (state, factoryId) => state.filteredFactoryId = factoryId,
-        UPDATE_SURVEYED_FACTORIES: (state, factories) => state.surveyedFactories = factories
+        UPDATE_FILTERED_FACTORY_ID: (state, businessUnitId) => state.filteredFactoryId = businessUnitId,
+        UPDATE_SURVEYED_BUSINESS_UNITS: (state, businessUnits) => state.surveyedBusinessUnits = businessUnits
     },
     getters: {
         allSurveys: (state) => state.surveyList,
-        surveyedFactories: (state) => state.surveyedFactories,
+        surveyedBusinessUnits: (state) => state.surveyedBusinessUnits,
     }
 }

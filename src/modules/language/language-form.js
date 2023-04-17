@@ -26,7 +26,7 @@ export default {
                     }
                 } catch (error) {
                     console.log('error', error)
-                    dispatch('showError', " Failed fetching the factory to edit.", {root: true});
+                    dispatch('showError', " Failed fetching the business unit to edit.", {root: true});
                 }
             } else {
                 commit('UPDATE_LANGUAGE_NAME', null);

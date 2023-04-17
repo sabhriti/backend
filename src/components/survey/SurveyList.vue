@@ -4,10 +4,10 @@
     <caption>
       <div class="input-group mb-3">
         <div class="input-group">
-          <div class="input-group-text me-3">Factory:
+          <div class="input-group-text me-3">Business Unit:
           <select v-model="filteredFactoryId" class="form-select-sm ms-2">
-            <option v-for="factory in surveyedFactories" :key="factory._id" v-bind:value="factory._id">
-              {{ factory.name }}
+            <option v-for="businessUnit in surveyedBusinessUnits" :key="businessUnit._id" v-bind:value="businessUnit._id">
+              {{ businessUnit.name }}
             </option>
           </select>
           </div>
@@ -27,7 +27,7 @@
     <tr class="text-white">
       <th scope="col">#</th>
       <th scope="col">Survey Name</th>
-      <th scope="col">Factory Name</th>
+      <th scope="col">Business Unit Name</th>
       <th scope="col">Questions</th>
       <th scope="col">Action</th>
     </tr>
@@ -36,7 +36,7 @@
     <tr v-for="(survey, index) in allSurveys" :key="index">
       <td>{{ index + 1 }}</td>
       <td>{{ survey.surveyName }}</td>
-      <td>{{ survey.factory.name }}</td>
+      <td>{{ survey.businessUnit.name }}</td>
       <td>{{ survey.questions.length }}</td>
       <td>
         <router-link :to="`/surveys/form/id=${survey._id}`" class="material-icons text-decoration-none text-info"
@@ -77,7 +77,7 @@ export default {
     this.fetchAllSurveys();
   },
   computed: {
-    ...mapGetters(['allSurveys', 'surveyedFactories']),
+    ...mapGetters(['allSurveys', 'surveyedBusinessUnits']),
     filteredFactoryId: {
       get() {
         return this.$store.state.surveyList.filteredFactoryId
