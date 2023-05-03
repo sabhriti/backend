@@ -5,9 +5,8 @@
         <thead class="table-bordered">
         <tr class="text-white">
             <th scope="col">#</th>
-            <th scope="col">Factory Name</th>
+            <th scope="col">Name</th>
             <th scope="col">Location</th>
-            <th scope="col">Code</th>
             <th scope="col">Action</th>
         </tr>
         </thead>
@@ -15,18 +14,17 @@
         <tr v-for="(businessUnit, index) in allBusinessUnits" v-bind:key="index">
             <th scope="col">{{ index + 1 }}</th>
             <th scope="col">{{ businessUnit.name }}</th>
-            <th scope="col">{{ businessUnit.city }}, {{ businessUnit.country }}</th>
-            <th scope="col">{{ businessUnit.code }}</th>
+            <th scope="col">{{ businessUnit.location.city }}, {{ businessUnit.location.country }}</th>
             <th scope="col">
-                <router-link :to="`/business-unit/form/id=${businessUnit._id}`"
+                <router-link :to="`/business-unit/form/id=${businessUnit.id}`"
                              class="material-icons text-decoration-none text-info"
                              title="Edit Business Unit">edit
                 </router-link>
-                <a :data-bs-target="`#deleteFactory_${businessUnit._id}`" data-bs-toggle="modal" href="javascript:void(0);">
+                <a :data-bs-target="`#deleteFactory_${businessUnit.id}`" data-bs-toggle="modal" href="javascript:void(0);">
                     <span class="material-icons-outlined text-danger" title="Delete Business Unit">delete</span>
                 </a>
                 <!-- Modal -->
-                <div :id="`deleteFactory_${businessUnit._id}`" aria-hidden="true" class="modal fade" tabindex="-1">
+                <div :id="`deleteFactory_${businessUnit.id}`" aria-hidden="true" class="modal fade" tabindex="-1">
                     <div class="modal-dialog">
                         <div class="modal-content">
 
@@ -35,7 +33,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button class="btn btn-danger" data-bs-dismiss="modal" type="button"
-                                        @click="deleteFactory(businessUnit._id)">Yes
+                                        @click="deleteBusinessUnit(businessUnit.id)">Yes
                                 </button>
                                 <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">No</button>
                             </div>
@@ -61,7 +59,7 @@ export default {
     methods: {
         ...mapActions({
             fetchAllBusinessUnits: 'businessUnitList/fetchAllBusinessUnits',
-            deleteFactory: 'businessUnitList/deleteBusinessUnit'
+            deleteBusinessUnit: 'businessUnitList/deleteBusinessUnit'
         }),
     },
     computed: {

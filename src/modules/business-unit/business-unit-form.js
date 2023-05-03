@@ -21,44 +21,40 @@ export default {
                 try {
                     const config = {
                         method: 'get',
-                        url: `${ApiConfig.NEW_API_BASE_URL}/business-units/${unitId}`,
+                        url: `${ApiConfig.NEW_API_BASE_URL}/business-units/id=${unitId}`,
                         headers: {}
                     };
 
                     const response = await axios(config);
 
-                    if (response.data.data) {
-                        commit('UPDATE_BUSINESS_UNIT_NAME', response.data.data.name);
-                        commit('UPDATE_BUSINESS_UNIT_CODE', response.data.data.code);
-                        commit('UPDATE_BUSINESS_UNIT_CITY', response.data.data.city);
-                        commit('UPDATE_BUSINESS_UNIT_COUNTRY', response.data.data.country);
-                        commit('UPDATE_BUSINESS_UNIT_ID', response.data.data._id);
+                    if (response.data) {
+                        const businessUnit = response.data;
+                        commit('UPDATE_BUSINESS_UNIT_ID', businessUnit.id);
+                        commit('UPDATE_BUSINESS_UNIT_NAME', businessUnit.name);
+                        commit('UPDATE_BUSINESS_UNIT_STREET', businessUnit.location.street);
+                        commit('UPDATE_BUSINESS_UNIT_HOUSE_NUMBER', businessUnit.location.houseNumber);
+                        commit('UPDATE_BUSINESS_UNIT_ZIP_CODE', businessUnit.location.zipCode);
+                        commit('UPDATE_BUSINESS_UNIT_CITY', businessUnit.location.city);
+                        commit('UPDATE_BUSINESS_UNIT_COUNTRY', businessUnit.location.country);
                     }
                 } catch (error) {
                     dispatch('showError', " Failed fetching the business unit to edit.", {root: true});
                 }
             } else {
                 commit('UPDATE_BUSINESS_UNIT_NAME', null);
-                commit('UPDATE_BUSINESS_UNIT_CODE', null);
+                commit('UPDATE_BUSINESS_UNIT_LOCATION', {});
                 commit('UPDATE_BUSINESS_UNIT_ID', null);
             }
         },
         async saveBusinessUnit({ state, dispatch}) {
             try {
-                const dataToStore =  {
-                    name: state.name,
-                    city: state.location.city,
-                    country: state.location.country,
-                    id: state.id
-                };
-
                 const config = {
                     method: 'post',
-                    url: `${ApiConfig.NEW_API_BASE_URL}/factories/`,
+                    url: `${ApiConfig.NEW_API_BASE_URL}/business-units`,
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    data: dataToStore
+                    data: state
                 };
 
                 await axios(config);
@@ -75,12 +71,12 @@ export default {
         businessUnitName: (state) => state.businessUnitName,
     },
     mutations: {
-        UPDATE_BUSINESS_UNIT_NAME: (state, value) => state.businessUnitName = value,
         UPDATE_BUSINESS_UNIT_ID: (state, value) => state.id = value,
+        UPDATE_BUSINESS_UNIT_NAME: (state, value) => state.name = value,
         UPDATE_BUSINESS_UNIT_STREET: (state, value) => state.location.street = value,
         UPDATE_BUSINESS_UNIT_HOUSE_NUMBER: (state, value) => state.location.houseNumber = value,
         UPDATE_BUSINESS_UNIT_ZIP_CODE: (state, value) => state.location.zipCode = value,
         UPDATE_BUSINESS_UNIT_CITY: (state, value) => state.location.city = value,
-        UPDATE_BUSINESS_UNIT_COUNTRY: (state, value) => state.city.country = value,
+        UPDATE_BUSINESS_UNIT_COUNTRY: (state, value) => state.location.country = value,
     }
 }

@@ -4,7 +4,7 @@ import axios from "axios";
 export default {
     namespaced: true,
     state: {
-        unitList: [],
+        businessUnitList: [],
     },
 
     actions: {
@@ -17,9 +17,10 @@ export default {
 
             try {
                 const response = await axios(config);
-                commit('UPDATE_ALL_UNITS', response.data.data);
+                console.log(response.data)
+                commit('UPDATE_ALL_BUSINESS_UNITS', response.data);
             } catch (error) {
-                dispatch('showError', " Failed fetching factories.", {root: true});
+                dispatch('showError', " Failed fetching business units.", {root: true});
             }
         },
         async deleteBusinessUnit({commit, state, dispatch}, unitId) {
@@ -33,7 +34,7 @@ export default {
                 if (response.status === 200) {
                     const newUnitList = state.unitList.filter(unit => unit._id !== unitId);
                     dispatch('showInfo', "Business unit successfully deleted.", {root: true});
-                    commit('UPDATE_ALL_UNITS', newUnitList);
+                    commit('UPDATE_ALL_BUSINESS_UNITS', newUnitList);
                 }
                 if (response.status === 404) {
                     dispatch('showError', "Failed deleting Business unit.", {root: true});
@@ -44,9 +45,9 @@ export default {
         },
     },
     getters: {
-        allBusinessUnits: (state) => state.unitList,
+        allBusinessUnits: (state) => state.businessUnitList,
     },
     mutations: {
-        UPDATE_ALL_UNITS: (state, unitList) => state.unitList = unitList,
+        UPDATE_ALL_BUSINESS_UNITS: (state, businessUnitList) => state.businessUnitList = businessUnitList,
     }
 }

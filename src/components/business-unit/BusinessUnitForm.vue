@@ -34,8 +34,6 @@
             <input v-model="country" class="form-control-color" name="country" placeholder="Country"
                    type="text">
         </div>
-
-
     </div>
 
 
