@@ -78,5 +78,6 @@ export default {
         UPDATE_BUSINESS_UNIT_ZIP_CODE: (state, value) => state.location.zipCode = value,
         UPDATE_BUSINESS_UNIT_CITY: (state, value) => state.location.city = value,
         UPDATE_BUSINESS_UNIT_COUNTRY: (state, value) => state.location.country = value,
+        UPDATE_BUSINESS_UNIT_LOCATION: (state, value) => state.location = value,
     }
 }

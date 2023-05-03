@@ -17,7 +17,6 @@ export default {
 
             try {
                 const response = await axios(config);
-                console.log(response.data)
                 commit('UPDATE_ALL_BUSINESS_UNITS', response.data);
             } catch (error) {
                 dispatch('showError', " Failed fetching business units.", {root: true});
@@ -26,18 +25,19 @@ export default {
         async deleteBusinessUnit({commit, state, dispatch}, unitId) {
             const config = {
                 method: 'delete',
-                url: `${ApiConfig.NEW_API_BASE_URL}/business-units/${unitId}`
+                url: `${ApiConfig.NEW_API_BASE_URL}/business-units/id=${unitId}`
             };
 
             try {
                 const response = await axios(config);
+
                 if (response.status === 200) {
-                    const newUnitList = state.unitList.filter(unit => unit._id !== unitId);
-                    dispatch('showInfo', "Business unit successfully deleted.", {root: true});
+                    const newUnitList = state.businessUnitList.filter(unit => unit.id !== unitId);
                     commit('UPDATE_ALL_BUSINESS_UNITS', newUnitList);
+                    dispatch('showInfo', "Business unit successfully deleted.", {root: true});
                 }
                 if (response.status === 404) {
-                    dispatch('showError', "Failed deleting Business unit.", {root: true});
+                    dispatch('showError', "Failed deleting business unit.", {root: true});
                 }
             } catch (error) {
                 dispatch('showError', "Failed deleting Business unit.", {root: true});
