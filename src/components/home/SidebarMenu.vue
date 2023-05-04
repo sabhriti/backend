@@ -11,7 +11,7 @@
                             <span class="material-icons-outlined" v-else>arrow_drop_down</span>
 
                         </a>
-                        <Transition name="toggleChildren">
+                        <Transition>
                             <ul v-if="showChildren" class="nav flex-column">
                                 <template v-for="(subRoute, i) in route.children" :key="i">
                                     <li class="nav-item list-unstyled border-top nav-children-item">
@@ -181,27 +181,6 @@ export default {
 
 .nav-children-icon {
     font-size: 15px;
-}
-
-.slide-leave-active {
-    -moz-transition-duration: 0.3s;
-    -webkit-transition-duration: 0.3s;
-    -o-transition-duration: 0.3s;
-    transition-duration: 0.3s;
-    -moz-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
-    -webkit-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
-    -o-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
-    transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
-}
-
-.slide-enter-to, .slide-leave {
-    max-height: 100px;
-    overflow: hidden;
-}
-
-.slide-enter, .slide-leave-to {
-    overflow: hidden;
-    max-height: 0;
 }
 
 .v-enter-active,
