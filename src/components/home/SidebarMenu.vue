@@ -1,7 +1,7 @@
 <template>
     <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block sidebar bg-dark collapse show">
         <div class="position-sticky pt-3 mt-4">
-            <ul class="nav flex-column">
+            <ul class="nav flex-column nav-underline">
                 <li v-for="(route, index) in getRoutes()" :key="index" class="nav-item border-bottom nav-main-item">
                     <template v-if="route.children">
                         <a class="nav-link text-info" href="javascript:void(0);" @click="toggleChildren">
@@ -9,13 +9,14 @@
                             {{ route.text }}
                             <span class="material-icons-outlined" v-if="showChildren">arrow_drop_up</span>
                             <span class="material-icons-outlined" v-else>arrow_drop_down</span>
+                            {{currentPath}}
 
                         </a>
                         <Transition>
                             <ul v-if="showChildren" class="nav flex-column">
                                 <template v-for="(subRoute, i) in route.children" :key="i">
                                     <li class="nav-item list-unstyled border-top nav-children-item">
-                                        <router-link :to="route.to + subRoute.to"  class="nav-link text-info ms-3">
+                                        <router-link :to="route.to + subRoute.to"  class="nav-link text-info ms-3 ">
                                             <span class="material-icons-outlined nav-children-icon">{{
                                                 subRoute.icon
                                                 }}</span>
@@ -74,6 +75,7 @@ export default {
     data() {
         return {
             showChildren: false,
+            currentPath: '',
             routes: [
                 {
                     to: '/',
@@ -145,6 +147,10 @@ export default {
                 }
             ]
         }
+    },
+
+    mounted() {
+        this.currentPath = this.routes.fullPath;
     }
 }
 </script>
@@ -181,6 +187,11 @@ export default {
 
 .nav-children-icon {
     font-size: 15px;
+}
+
+.active {
+    background: #455766;
+    color: white;
 }
 
 .v-enter-active,

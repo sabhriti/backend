@@ -51,6 +51,7 @@ const routes = [
 // http://127.0.1.1:9090/security/create-password/token=$2a$10$DtMvcUCYU0aV7kUk3pUCHegyXe1wvGM/Rwd1NbeLr.7FZLiwgs8FS
 const router = createRouter({
     history: createWebHashHistory(),
+    linkExactActiveClass: 'active',
     routes
 });
 

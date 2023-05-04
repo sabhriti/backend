@@ -9,6 +9,7 @@ import changePassword from "@/modules/setting/change-password";
 import feedbackList from "@/modules/feedback/feedback-list";
 import questionList from "@/modules/question/question-list";
 import questionForm from "@/modules/question/question-form";
+import questionFrameworkList from "@/modules/question/framework/question-framework-list";
 import answerTypeForm from "@/modules/answer/answer-type-form";
 import answerTypeList from "@/modules/answer/answer-type-list";
 import userList from "@/modules/user/user-list";
@@ -37,6 +38,7 @@ export default createStore({
         feedbackList,
         questionList,
         questionForm,
+        questionFrameworkList,
         answerTypeForm,
         answerTypeList,
         surveyList,

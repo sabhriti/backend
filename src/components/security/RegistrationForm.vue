@@ -6,7 +6,7 @@
           <h3 class="h3">Register</h3>
           <p class="text-start text-info">
             Please fill up the following form to create a new account.
-            Once you have submitted form you will be informed via email about the next steps to start using this application.
+            Once you have submitted the form, you will be informed via email about the next steps.
             <br>
             <br>
             <b class="text-primary">Note: All the fields in the form are mandatory.</b>

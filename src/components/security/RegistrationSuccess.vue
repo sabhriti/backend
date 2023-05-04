@@ -7,7 +7,7 @@
           <h3 class="h3">Thank you very much.</h3>
           <p class="message">
             Your request has been successfully completed. We have received your application.
-            You will be sent an email with the next steps that you can use to proceed with the application.
+            An email will sent to you in few seconds with further instructions to continue with the registrations.
           </p>
           <router-link to="/security/login" class="btn btn-info login-button">Login</router-link>
         </div>

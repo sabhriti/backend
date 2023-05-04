@@ -7,8 +7,8 @@
 
           <div class="card-header border-success ">
             <h3 class="h3">Reset password</h3>
-            <p class="text-start text-info">Please provide your email address;
-              an email will be sent to your email with the instructions to to reset your password.</p>
+            <p class="text-start text-info">Please provide your email address,
+              an email will be sent to this address with the instructions to to reset your password.</p>
           </div>
 
           <div class="card-body">
