@@ -2,10 +2,35 @@
     <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block sidebar bg-dark collapse show">
         <div class="position-sticky pt-3 mt-4">
             <ul class="nav flex-column">
-                <li v-for="(route, index) in getRoutes()" :key="index" class="nav-item">
-                    <router-link :to="route.to" class="nav-link text-info">
-                        <span class="material-icons-outlined">{{ route.icon }}</span> {{ route.text }}
-                    </router-link>
+                <li v-for="(route, index) in getRoutes()" :key="index" class="nav-item border-bottom nav-main-item">
+                    <template v-if="route.children">
+                        <a class="nav-link text-info" href="javascript:void(0);" @click="toggleChildren">
+                            <span class="material-icons-outlined">{{ route.icon }}</span>
+                            {{ route.text }}
+                            <span class="material-icons-outlined" v-if="showChildren">arrow_drop_up</span>
+                            <span class="material-icons-outlined" v-else>arrow_drop_down</span>
+
+                        </a>
+                        <Transition name="toggleChildren">
+                            <ul v-if="showChildren" class="nav flex-column">
+                                <template v-for="(subRoute, i) in route.children" :key="i">
+                                    <li class="nav-item list-unstyled border-top nav-children-item">
+                                        <router-link :to="route.to + subRoute.to"  class="nav-link text-info ms-3">
+                                            <span class="material-icons-outlined nav-children-icon">{{
+                                                subRoute.icon
+                                                }}</span>
+                                            {{ subRoute.text }}
+                                        </router-link>
+                                    </li>
+                                </template>
+                            </ul>
+                        </Transition>
+                    </template>
+                    <template v-else>
+                        <router-link :to="route.to" class="nav-link text-info">
+                            <span class="material-icons-outlined">{{ route.icon }}</span> {{ route.text }}
+                        </router-link>
+                    </template>
                 </li>
             </ul>
         </div>
@@ -41,10 +66,14 @@ export default {
                     }
                 });
             }
+        },
+        toggleChildren() {
+            this.showChildren = !this.showChildren
         }
     },
     data() {
         return {
+            showChildren: false,
             routes: [
                 {
                     to: '/',
@@ -68,7 +97,27 @@ export default {
                     to: '/question',
                     icon: 'quiz',
                     text: 'Question',
-                    requiredRole: ['ADMIN', 'USER']
+                    requiredRole: ['ADMIN', 'USER'],
+                    children: [
+                        {
+                            to: '/framework',
+                            icon: 'filter_frames',
+                            text: 'Framework',
+                            requiredRole: ['ADMIN', 'USER']
+                        },
+                        {
+                            to: '/category',
+                            icon: 'category',
+                            text: 'Category',
+                            requiredRole: ['ADMIN', 'USER']
+                        },
+                        {
+                            to: '',
+                            icon: 'question_answer',
+                            text: 'Questions',
+                            requiredRole: ['ADMIN', 'USER']
+                        }
+                    ]
                 },
                 {
                     to: '/surveys',
@@ -119,5 +168,49 @@ export default {
     bottom: -5px;
     position: relative;
     margin-right: 10px;
+}
+
+.nav-main-item {
+    border-bottom-color: #455766 !important;
+}
+
+.nav-children-item {
+    border-top-color: #455766 !important;
+    font-size: 15px;
+}
+
+.nav-children-icon {
+    font-size: 15px;
+}
+
+.slide-leave-active {
+    -moz-transition-duration: 0.3s;
+    -webkit-transition-duration: 0.3s;
+    -o-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    -moz-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+    -webkit-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+    -o-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+    transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+}
+
+.slide-enter-to, .slide-leave {
+    max-height: 100px;
+    overflow: hidden;
+}
+
+.slide-enter, .slide-leave-to {
+    overflow: hidden;
+    max-height: 0;
+}
+
+.v-enter-active,
+.v-leave-active {
+    transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+    opacity: 0;
 }
 </style>

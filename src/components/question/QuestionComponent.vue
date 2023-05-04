@@ -1,5 +1,5 @@
 <template>
-  <ComponentHeader text="Questions"/>
+  <ComponentHeader text="Questions" icon="quiz"/>
   <router-view></router-view>
 </template>
 
