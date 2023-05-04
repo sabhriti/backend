@@ -1,7 +1,7 @@
 import ApiConfig from "@/config/ApiConfig";
 
 import axios from "axios";
-import router from '../../routes';
+import router from '@/routes';
 import LocalStorage from "@/util/local_storage";
 import CryptoJS from "crypto-js";
 import SecurityConfig from "@/config/SecurityConfig";
