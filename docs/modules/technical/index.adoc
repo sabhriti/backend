@@ -1,1 +1,0 @@
-*This is the technical documentation of Sabriti Backend Application.*
