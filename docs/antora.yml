@@ -1,11 +1,7 @@
 name: backend
-title: Backend
-version: 1.0.0
-start_page: index.adoc
-asciidoc:
-  attributes:
-    source-language: asciidoc@
-    table-caption: false
+title: Sabhriti Backend
+version: 1.0
+prerelease: -beta.1
 nav:
-- modules/ROOT/nav.adoc
-
+- modules/technial/index.adoc
+- modules/user-manual/index.adoc
