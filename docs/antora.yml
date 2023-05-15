@@ -3,5 +3,5 @@ title: Sabhriti Backend
 version: 1.0
 prerelease: -beta.1
 nav:
-- modules/technial/index.adoc
+- modules/technical/index.adoc
 - modules/user-manual/index.adoc
