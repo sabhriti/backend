@@ -4,6 +4,7 @@ import QuestionForm from "@/components/question/QuestionForm.vue";
 import QuestionFramework from "@/components/question/framework/QuestionFramework.vue";
 import QuestionCategory from "@/components/question/category/QuestionCategory.vue";
 import QuestionFrameworkList from "@/components/question/framework/QuestionFrameworkList.vue";
+import QuestionFrameworkForm from "@/components/question/framework/QuestionFrameworkForm.vue";
 
 export default  {
     path: '/question/',
@@ -21,7 +22,7 @@ export default  {
             component: QuestionForm
         },
         {
-            path: 'framework',
+            path: 'framework/',
             name: 'QuestionFramework',
             component: QuestionFramework,
             children: [
@@ -29,6 +30,11 @@ export default  {
                     path: '',
                     name: 'QuestionFrameworkList',
                     component: QuestionFrameworkList
+                },
+                {
+                    path: 'form/id=:id?',
+                    name: 'QuestionFrameworkForm',
+                    component: QuestionFrameworkForm
                 },
             ]
         },

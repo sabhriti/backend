@@ -64,7 +64,7 @@
 import ComponentHeader from "@/components/ComponentHeader";
 import {mapActions, mapGetters} from "vuex";
 import AlertBox from "@/components/util/AlertBox";
-import businessUnitList from "@/modules/business-unit/business-unit-list";
+import businessUnitList from "@/store/modules/business-unit/business-unit-list";
 
 export default {
   name: "FeedbacksComponent",

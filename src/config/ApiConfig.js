@@ -11,7 +11,6 @@ export default {
 
 // add authentication headers to each http request.
 axios.interceptors.request.use((request) => {
-
     store.dispatch('fullPageSpinner/showSpinner');
 
     const session = LocalStorage.get('session');

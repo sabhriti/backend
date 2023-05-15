@@ -10,6 +10,9 @@ import feedbackList from "./modules/feedback/feedback-list";
 import questionList from "./modules/question/question-list";
 import questionForm from "./modules/question/question-form";
 import questionFrameworkList from "./modules/question/framework/question-framework-list";
+import questionFrameworkForm from "@/store/modules/question/framework/question-framework-form";
+import questionCategoryList from "@/store/modules/question/framework/question-category-list";
+import questionCategoryForm from "@/store/modules/question/framework/question-category-form";
 import answerTypeForm from "./modules/answer/answer-type-form";
 import answerTypeList from "./modules/answer/answer-type-list";
 import userList from "./modules/user/user-list";
@@ -39,6 +42,9 @@ export default createStore({
         questionList,
         questionForm,
         questionFrameworkList,
+        questionFrameworkForm,
+        questionCategoryList,
+        questionCategoryForm,
         answerTypeForm,
         answerTypeList,
         surveyList,
