@@ -63,6 +63,10 @@ export default {
             local_storage.setWithoutTtl("question_category_list", filteredCategories);
 
             commit('ADD_ALL_CATEGORIES', filteredCategories);
+        },
+        removeAllCategories({commit}) {
+            local_storage.remove('question_category_list');
+            commit('ADD_ALL_CATEGORIES', []);
         }
     },
 

@@ -39,29 +39,27 @@ export default defineComponent({
 <template>
     <div class="card mb-3">
         <div class="card-body">
-            <div class="container-fluid">
-                <AlertBox/>
+            <AlertBox/>
+            <form class="container-fluid" @submit.prevent="saveCategory">
                 <div class="row mb-2">
                     <input v-model="title" aria-label="Category Title" class="form-control"
                            placeholder="Category Title"
-                           type="text">
+                           required type="text">
                 </div>
                 <div class="row mb-3">
                 <textarea v-model="description" aria-label="Category Description" class="form-control"
                           name="categoryDescription" placeholder="Category Description"
-                          rows="3"></textarea>
+                          required rows="3"></textarea>
                 </div>
                 <div class="row text-start p-0">
                     <div class="col-1">
-                        <button class="btn btn-sm btn-outline-success m-0" type="button" @click="saveCategory">
-                            {{ formMode }}
-                        </button>
+                        <button class="btn btn-sm btn-outline-success m-0" type="submit">{{ formMode }}</button>
                     </div>
                     <div class="col-11">
                         <button class="btn btn-sm btn-outline-danger" type="submit" @click="hideForm">Cancel</button>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 

@@ -6,7 +6,7 @@ export default {
     state: {
         frameworkList: [
             {
-                name: "",
+                title: "",
                 description: "",
                 remarks: '',
                 categories: []
@@ -28,10 +28,7 @@ export default {
             try {
                 const response = await axios(config);
                 const frameworks = response.data;
-
-                if (frameworks.length <= 0) {
-                    commit('UPDATE_ALL_FRAMEWORKS', frameworks);
-                }
+                commit('UPDATE_ALL_FRAMEWORKS', frameworks);
             } catch (error) {
                 console.log(error);
             }
@@ -39,7 +36,7 @@ export default {
     },
     mutations: {
         UPDATE_ALL_FRAMEWORKS: (state, frameworkList) => {
-            state.frameworkList = frameworkList
+            state.frameworkList = frameworkList;
         }
     }
 }
