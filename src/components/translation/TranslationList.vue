@@ -156,12 +156,7 @@ export default {
     })
   },
   mounted() {
-    this.$store.dispatch('hideAlert');
     this.fetchAllTranslations();
   }
 }
 </script>
-
-<style scoped>
-
-</style>

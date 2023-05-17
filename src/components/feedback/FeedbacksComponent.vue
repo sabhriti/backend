@@ -5,10 +5,10 @@
     <caption>
       <div class="input-group mb-3">
         <div class="input-group">
-          <div class="input-group-text me-3">Factory:
+          <div class="input-group-text me-3">Business Unit:
             <select v-model="selectedFactory" class="form-select-sm ms-2">
-              <option v-for="factory in factoryList" :key="factory._id" v-bind:value="factory._id">
-                {{ factory.name }}
+              <option v-for="businessUnit in businessUnitList" :key="businessUnit._id" v-bind:value="businessUnit._id">
+                {{ businessUnit.name }}
               </option>
             </select>
           </div>
@@ -21,7 +21,7 @@
     <thead class="table-bordered">
     <tr class="text-white">
       <th scope="col">#</th>
-      <th scope="col">Factory Name</th>
+      <th scope="col">Business Unit Name</th>
       <th scope="col">Survey Name</th>
       <th scope="col">Feedback Message</th>
       <th scope="col">Action</th>
@@ -30,7 +30,7 @@
     <tbody class="table-bordered">
     <tr v-for="(feedback, index) in allFeedbacks" :key="feedback.id">
       <td>{{ index + 1 }}</td>
-      <td>{{ feedback.factory.name }}</td>
+      <td>{{ feedback.businessUnit.name }}</td>
       <td>{{ feedback.survey.surveyName }}</td>
       <td class="roles-td">{{ feedback.content }}</td>
       <td>
@@ -64,6 +64,7 @@
 import ComponentHeader from "@/components/ComponentHeader";
 import {mapActions, mapGetters} from "vuex";
 import AlertBox from "@/components/util/AlertBox";
+import businessUnitList from "@/store/modules/business-unit/business-unit-list";
 
 export default {
   name: "FeedbacksComponent",
@@ -79,18 +80,20 @@ export default {
     },
   },
   mounted() {
-    this.$store.dispatch('hideAlert');
     this.fetchFeedback();
   },
 
   computed: {
-    ...mapGetters(['allFeedbacks', 'factoryList']),
+      businessUnitList() {
+          return businessUnitList
+      },
+    ...mapGetters(['allFeedbacks', 'businessUnitList']),
     selectedFactory: {
       get() {
         return this.$store.state.feedbackList.selectedFactory
       },
       set(value) {
-        this.$store.commit('UPDATE_SELECTED_FACTORY', value)
+        this.$store.commit('UPDATE_SELECTED_BUSINESS_UNIT', value)
       }
     }
   }

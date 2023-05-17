@@ -91,7 +91,6 @@ export default {
   },
 
   mounted() {
-    this.$store.dispatch('hideAlert');
     this.fetchAnswerTypeById(this.$route.params.id);
   }
 }

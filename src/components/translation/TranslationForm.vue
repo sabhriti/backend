@@ -91,7 +91,6 @@ export default {
     }),
   },
   mounted() {
-    this.$store.dispatch('hideAlert');
     this.fetchTranslationById(this.$route.params.id);
   },
 }

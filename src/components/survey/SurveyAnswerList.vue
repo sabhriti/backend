@@ -15,7 +15,7 @@
     <tbody class="table-bordered">
     <tr v-for="(surveyAnswer, index) in allSurveyAnswers" v-bind:key="surveyAnswer._id">
       <td>{{ index + 1 }}</td>
-      <td>{{surveyAnswer.factoryCode}}</td>
+      <td>{{surveyAnswer.businessUnitCode}}</td>
       <td>{{surveyAnswer.questionNumber}}</td>
       <td>{{surveyAnswer.answerText}}</td>
       <td>{{surveyAnswer.answerValue}}</td>
@@ -36,12 +36,7 @@ export default {
     ...mapGetters(['allSurveyAnswers'])
   },
   mounted() {
-    this.$store.dispatch('hideAlert');
     this.fetchAnswersBySurveyCode(this.$route.params.surveyId);
   }
 }
 </script>
-
-<style scoped>
-
-</style>

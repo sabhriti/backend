@@ -3,7 +3,7 @@
 
   <div class="mb-3 row">
     <label class="col-sm-2 col-form-label d-flex justify-content-start" for="keyName">Key name</label>
-    <input v-model="keyName" class="form-control" name="factoryName" placeholder="Key Name" style="width: 25rem;"
+    <input v-model="keyName" class="form-control" name="keyName" placeholder="Key Name" style="width: 25rem;"
            type="text">
   </div>
 
@@ -63,9 +63,6 @@ export default {
         this.$store.commit('translationKeyForm/UPDATE_IS_ACTIVE', value)
       }
     }
-  },
-  created() {
-    this.$store.dispatch('hideAlert');
   }
 }
 </script>
