@@ -66,7 +66,11 @@ export default {
 
                 LocalStorage.set("session", sessionData, 900);
 
-                await router.push({path: state.redirectedFrom.fullPath});
+                if (state.redirectedFrom && state.redirectedFrom.fullPath) {
+                    await router.push({path: state.redirectedFrom.fullPath});
+                } else {
+                    await router.push({path: '/'});
+                }
             } catch (error) {
                 console.log(error);
             }

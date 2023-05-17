@@ -5,17 +5,20 @@ export default {
     state: {
         id: '',
         title: '',
-        description: ''
+        description: '',
+        formMode: "Add"
     },
 
     actions: {
-        addNewCategory: ({state, commit, dispatch, rootGetters}) => {
+        saveCategory: ({state, commit, dispatch, rootGetters}) => {
             const existingCategories = rootGetters['questionCategoryList/categoryList'];
 
-            if (existingCategories.some(category => category.title === state.title)) {
-                dispatch('showError', " Category with same title already exists.", {root: true});
-            } else {
-                if (existingCategories.some(category => category.id === state.id)) {
+            if (existingCategories.some(category => category.id === state.id)) {
+                const filtered = existingCategories.filter(category => category.id !== state.id);
+
+                if (filtered.some(category => category.title === state.title)) {
+                    dispatch('showError', " Category with same title already exists.", {root: true});
+                } else {
                     const data = {
                         id: state.id,
                         title: state.title,
@@ -23,7 +26,12 @@ export default {
                     };
 
                     dispatch('questionCategoryList/updateCategoryInList', data, {root: true});
-
+                    commit('CLEAR_STATE');
+                    dispatch('hideForm');
+                }
+            } else {
+                if (existingCategories.some(category => category.title === state.title)) {
+                    dispatch('showError', " Category with same title already exists.", {root: true});
                 } else {
                     const data = {
                         id: uuidv4(),
@@ -31,14 +39,15 @@ export default {
                         description: state.description
                     };
                     dispatch('questionCategoryList/addNewCategoryToList', data, {root: true});
+                    commit('CLEAR_STATE');
+                    dispatch('hideForm');
                 }
-
-                commit('CLEAR_STATE');
             }
         },
 
         populateForm({commit}, category) {
             commit('UPDATE_CATEGORY', category);
+            commit('UPDATE_QUESTION_CATEGORY_FORM_MODE', "Save");
         },
 
         loadCategories: ({dispatch}) => {
@@ -54,10 +63,12 @@ export default {
         id: (state) => state.id,
         title: (state) => state.title,
         description: (state) => state.description,
+        formMode: (state) => state.formMode
     },
     mutations: {
         UPDATE_QUESTION_CATEGORY_TITLE: (state, value) => state.title = value,
         UPDATE_QUESTION_CATEGORY_DESCRIPTION: (state, value) => state.description = value,
+        UPDATE_QUESTION_CATEGORY_FORM_MODE: (state, mode) => state.formMode = mode,
         CLEAR_STATE: (state) => {
             state.id = '';
             state.title = '';

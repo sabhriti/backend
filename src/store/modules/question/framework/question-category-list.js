@@ -25,7 +25,7 @@ export default {
         updateCategoryInList({commit}, categoryToUpdate) {
             let categoriesFromStorage = local_storage.get("question_category_list");
 
-            const category = categoriesFromStorage.filter(category => category.id === categoryToUpdate.id);
+            const category = categoriesFromStorage.filter(category => category.id === categoryToUpdate.id)[0];
             const filteredCategories = categoriesFromStorage.filter(category => category.id !== categoryToUpdate.id);
 
             local_storage.remove("question_category_list");
@@ -43,7 +43,7 @@ export default {
             const categoriesFromStorage = local_storage.get('question_category_list');
 
             if (categoriesFromStorage) {
-                commit('ADD_ALL_CATEGORIES',  local_storage.get('question_category_list'));
+                commit('ADD_ALL_CATEGORIES', local_storage.get('question_category_list'));
             }
         },
 
@@ -53,6 +53,16 @@ export default {
 
         showDisplayForm: ({commit}) => {
             commit('SHOW_DISPLAY_FORM');
+        },
+
+        removeCategory({commit}, categoryToRemove) {
+            const categoriesFromStorage = local_storage.get('question_category_list');
+
+            const filteredCategories = categoriesFromStorage.filter(category => category.id !== categoryToRemove.id);
+
+            local_storage.setWithoutTtl("question_category_list", filteredCategories);
+
+            commit('ADD_ALL_CATEGORIES', filteredCategories);
         }
     },
 

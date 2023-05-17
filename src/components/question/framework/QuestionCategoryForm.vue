@@ -8,12 +8,14 @@ export default defineComponent({
     components: {AlertBox},
     methods: {
         ...mapActions({
-            addNewCategory: 'questionCategoryForm/addNewCategory',
+            saveCategory: 'questionCategoryForm/saveCategory',
             hideForm: 'questionCategoryForm/hideForm'
         })
     },
     computed: {
-        ...mapGetters({}),
+        ...mapGetters({
+            formMode: 'questionCategoryForm/formMode'
+        }),
         title: {
             get() {
                 return this.$store.state.questionCategoryForm.title;
@@ -45,13 +47,14 @@ export default defineComponent({
                            type="text">
                 </div>
                 <div class="row mb-3">
-                <textarea aria-label="Category Description" class="form-control" name="categoryDescription"
-                          placeholder="Category Description" v-model="description"
+                <textarea v-model="description" aria-label="Category Description" class="form-control"
+                          name="categoryDescription" placeholder="Category Description"
                           rows="3"></textarea>
                 </div>
                 <div class="row text-start p-0">
                     <div class="col-1">
-                        <button class="btn btn-sm btn-outline-success m-0" type="submit" @click="addNewCategory">Add
+                        <button class="btn btn-sm btn-outline-success m-0" type="button" @click="saveCategory">
+                            {{ formMode }}
                         </button>
                     </div>
                     <div class="col-11">
