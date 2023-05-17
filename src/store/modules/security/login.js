@@ -11,7 +11,8 @@ export default {
     state: {
         username: '',
         password: '',
-        rememberMe: false
+        rememberMe: false,
+        redirectedFrom: ''
     },
     actions: {
         async loginAction({dispatch, state}) {
@@ -65,7 +66,7 @@ export default {
 
                 LocalStorage.set("session", sessionData, 900);
 
-                await router.push({name: 'home'});
+                await router.push({path: state.redirectedFrom.fullPath});
             } catch (error) {
                 console.log(error);
             }
@@ -80,6 +81,7 @@ export default {
     mutations: {
         USERNAME: (state, username) => state.username = username,
         PASSWORD: (state, password) => state.password = password,
-        REMEMBER_ME: (state, rememberMe) => state.rememberMe = rememberMe
+        REMEMBER_ME: (state, rememberMe) => state.rememberMe = rememberMe,
+        REDIRECTED_FROM: (state, url) => state.redirectedFrom = url
     }
 };

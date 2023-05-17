@@ -90,7 +90,10 @@ export default {
             loginAction: 'login/loginAction',
         }),
     },
-    created() {
+    mounted() {
+
+        this.$store.commit('login/REDIRECTED_FROM', this.$router.currentRoute.value.redirectedFrom)
+
         const itemFromLocalStorage = LocalStorage.get('remember_me');
         if (itemFromLocalStorage) {
             const bytes = CryptoJS.AES.decrypt(itemFromLocalStorage.password, SecurityConfig.PASSWORD_ENCRYPTION_SECRET);

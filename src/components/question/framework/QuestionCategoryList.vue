@@ -14,11 +14,22 @@ export default defineComponent({
     },
     methods: {
         ...mapActions({
-            toggleDisplayForm: 'questionCategoryList/toggleDisplayForm'
+            toggleDisplayForm: 'questionCategoryList/toggleDisplayForm',
+            showDisplayForm: 'questionCategoryList/showDisplayForm',
+            loadCategories: 'questionCategoryForm/loadCategories',
+            populateForm: 'questionCategoryForm/populateForm',
         }),
         addCategory() {
             this.toggleDisplayForm();
+        },
+        editCategory(category) {
+            this.showDisplayForm();
+            this.populateForm(category);
         }
+    },
+
+    mounted() {
+        this.loadCategories();
     }
 });
 </script>
@@ -28,7 +39,7 @@ export default defineComponent({
     <QuestionCategoryForm v-if="displayForm"/>
 
     <table class="table table-secondary table-striped">
-        <caption class="bg-secondary text-white caption-top" v-if="!displayForm">
+        <caption v-if="!displayForm" class="bg-secondary text-white caption-top">
             <button class="btn btn-sm btn-danger ms-2" @click="addCategory">Add New</button>
         </caption>
         <tbody>
@@ -36,7 +47,8 @@ export default defineComponent({
             <td>{{ category.title }}</td>
             <td>{{ category.description }}</td>
             <td>
-                <span class="material-icons text-success">edit</span>
+                <a href="javascript:void(0);" @click="editCategory(category)"> <span
+                        class="material-icons text-success ">edit</span></a>
                 <span class="material-icons text-danger">delete</span>
             </td>
         </tr>

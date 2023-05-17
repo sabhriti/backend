@@ -13,22 +13,18 @@ export default defineComponent({
         })
     },
     computed: {
-        ...mapGetters({
-            id: "questionCategoryForm/id",
-            title: "questionCategoryForm/title",
-            description: "questionCategoryForm/description",
-        }),
-        categoryTitle: {
+        ...mapGetters({}),
+        title: {
             get() {
-                return this.id;
+                return this.$store.state.questionCategoryForm.title;
             },
             set(value) {
                 this.$store.commit('questionCategoryForm/UPDATE_QUESTION_CATEGORY_TITLE', value)
             }
         },
-        categoryDescription: {
+        description: {
             get() {
-                return this.description;
+                return this.$store.state.questionCategoryForm.description;
             },
             set(value) {
                 this.$store.commit('questionCategoryForm/UPDATE_QUESTION_CATEGORY_DESCRIPTION', value)
@@ -44,13 +40,13 @@ export default defineComponent({
             <div class="container-fluid">
                 <AlertBox/>
                 <div class="row mb-2">
-                    <input v-model="categoryTitle" aria-label="Category Title" class="form-control"
+                    <input v-model="title" aria-label="Category Title" class="form-control"
                            placeholder="Category Title"
                            type="text">
                 </div>
                 <div class="row mb-3">
                 <textarea aria-label="Category Description" class="form-control" name="categoryDescription"
-                          placeholder="Category Description"
+                          placeholder="Category Description" v-model="description"
                           rows="3"></textarea>
                 </div>
                 <div class="row text-start p-0">
